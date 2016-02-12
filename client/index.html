@@ -1,0 +1,58 @@
+<head>
+  <title>EM-Tippspiel</title>
+    <!-- Material Design Lite -->
+    <script src="https://code.getmdl.io/1.1.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.0/material.indigo-pink.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">EM-Tippspiel</span>
+      </div>
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Home</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Gruppenübersicht</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab">Spielplan & Wetten</a>
+        <a href="#fixed-tab-4" class="mdl-layout__tab">Mein Konto</a>
+        <a href="#fixed-tab-5" class="mdl-layout__tab">Admin</a>
+      </div>
+    </header>
+    <!-- Navigation links zum einblenden -->
+    <!--<div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Title</span>
+    </div>-->
+    <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div class="page-content">
+          {{> home}}
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+        <div class="page-content">
+          {{> groups}}
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+        <div class="page-content">
+          {{> games}}
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-4">
+        <div class="page-content">
+          {{> myAccount}}
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-5">
+        <div class="page-content">
+          {{> admin}}
+        </div>
+      </section>
+    </main>
+  </div>
+</body>

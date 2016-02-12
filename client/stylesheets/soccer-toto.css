@@ -1,0 +1,38 @@
+.selected{
+  background-color: #D1EDE7;
+}
+
+.mdl-cell {
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.groupTeamsTitle {
+  margin-top: 35px;
+}
+
+#resultTeam1, #resultTeam2 {
+  width: 40px;
+  outline: none;
+  display: inline;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+#gameDateDiv, #gameTimeDiv, #gameGroupDiv, #gameTeam1Div, #gameTeam2Div, #resultInputDiv {
+  width: auto;
+}
+
+#resultInputDiv {
+  padding: 0px;
+}
+
+#groupsTable {
+  width: 100%;
+  margin-bottom: 20px;
+}
+#groupsTable th, #groupsTable td {
+  padding: 8px;
+}

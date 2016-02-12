@@ -1,0 +1,203 @@
+<template name="admin">
+  <h2>Administration</h2>
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Guthaben</h4>
+      {{> adminCredits}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Spiele & Ergebnisse</h4>
+      {{> adminResults}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Mannschaften</h4>
+      {{> adminTeams}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Gruppen</h4>
+      {{> adminGroups}}
+    </div>
+  </div>
+</template>
+
+<template name="adminTeams">
+  <form>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="teamName" name="teamName" required>
+      <label class="mdl-textfield__label" for="teamName">Mannschaftsname</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="teamShortname" name="teamShortname" required>
+      <label class="mdl-textfield__label" for="teamShortname">Mannschafts-Abkürzung</label>
+    </div>
+    <button id="addTeam" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Mannschaft hinzufügen</button>
+  </form>
+
+  <ul class="mdl-list">
+    {{#each team }}
+      <li class="team {{selectedTeamClass}} mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {{name}} ({{shortname}})
+        </span>
+      </li>
+    {{/each}}
+    {{#if teamSelected}}
+      <button id="removeTeam" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Mannschaft löschen</button>
+      <br>
+      <hr>
+      <h5>Gruppenzuweisung für die Mannschaft: <b>{{teamSelected.name}}</b></h5>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <ul class="mdl-list">
+          {{#each group }}
+            <li class="teamGroup {{selectedTeamGroupClass}} mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                {{name}}
+              </span>
+            </li>
+          {{/each}}
+        </ul>
+        </div>
+        <button id="addTeamToGroup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Gruppe speichern</button>
+      </div>
+    {{/if}}
+  </ul>
+</template>
+
+
+<template name="adminGroups">
+  <form>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="groupName" name="groupName" required>
+      <label class="mdl-textfield__label" for="groupName">Gruppenname</label>
+    </div>
+    <button id="addGroup" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Gruppe hinzufügen</button>
+  </form>
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <ul class="mdl-list">
+        {{#each group }}
+          <li class="group {{selectedClass}} mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {{name}}
+            </span>
+          </li>
+        {{/each}}
+        {{#if groupSelected}}
+          <button id="removeGroup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Gruppe löschen</button>
+        {{/if}}
+      </ul>
+    </div>
+    {{#if groupSelected}}
+    <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone">
+      <h5 class="groupTeamsTitle">{{groupSelected.name}}</h5>
+    </div>
+    <div class="mdl-cell mdl-cell--5-col mdl-cell--7-col-tablet mdl-cell--3-col-phone">
+      <ul class="mdl-list">
+        {{#each groupTeams }}
+          <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {{name}} ({{shortname}})
+            </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </div>
+</template>
+
+
+<template name="adminCredits">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h6>Guthaben an User schicken</h6>
+    </div>
+  </div>
+</template>
+
+
+<template name="adminResults">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <form id="addGame">
+        <div id="gameDateDiv" class="mdl-textfield mdl-js-textfield">
+          <label for="gameDate">Datum:</label>
+          <input class="mdl-textfield__input" type="date" name="gameDate" id="gameDate" required>
+        </div>
+        <div id="gameTimeDiv" class="mdl-textfield mdl-js-textfield">
+          <label for="gameTime">Spielbeginn:</label>
+          <input class="mdl-textfield__input" type="time" name="gameTime" id="gameTime" required>
+        </div>
+        <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
+          <select class="mdl-textfield__input" id="gameGroup" name="gameGroup" required>
+            <option selected disabled>Gruppe</option>
+            <option value="noGroupGame">Kein Gruppenspiel</option>
+            {{#each group}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div id="gameTeam1Div" class="mdl-textfield mdl-js-textfield">
+          <select class="mdl-textfield__input" id="gameTeam1" name="gameTeam1" required>
+            <option selected disabled>Team 1</option>
+            {{#each team}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div id="gameTeam2Div" class="mdl-textfield mdl-js-textfield">
+          <select class="mdl-textfield__input" id="gameTeam2" name="gameTeam2" required>
+            <option selected disabled>Team 2</option>
+            {{#each team}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <button id="addGame" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Spiel hinzufügen</button>
+      </form>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <table class="mdl-data-table mdl-js-data-table">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Datum</th>
+            <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
+            <th class="mdl-data-table__cell--non-numeric">Gruppe</th>
+            <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
+            <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
+            <th class="mdl-data-table__cell--non-numeric">Ergebnis</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each game}}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+              <td>{{time}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
+              <td class="mdl-data-table__cell--non-numeric">
+                {{#if hasResult}}
+                  {{result1}} : {{result2}}
+                {{else}}
+                  <form id="addGameResult">
+                    <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
+                      <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
+                    </div>
+                    <button id="addGameResult" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Speichern</button>
+                  </form>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

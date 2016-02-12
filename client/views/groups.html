@@ -1,0 +1,43 @@
+<template name="groups">
+  <h1>Gruppen</h1>
+  {{> groupOverview}}
+</template>
+
+
+<template name="groupOverview">
+  <div class="mdl-grid">
+    {{#each groups}}
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>{{name}}</h5>
+      <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Platz</th>
+            <th class="mdl-data-table__cell--non-numeric">Mannschaft</th>
+            <th class="mdl-data-table__cell--non-numeric">Spiele</th>
+            <th class="mdl-data-table__cell--non-numeric">S</th>
+            <th class="mdl-data-table__cell--non-numeric">U</th>
+            <th class="mdl-data-table__cell--non-numeric">N</th>
+            <th class="mdl-data-table__cell--non-numeric">Tordifferenz</th>
+            <th class="mdl-data-table__cell--non-numeric">Punkte</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each teams}}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{index}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{name}} ({{shortname}})</td>
+              <td class="mdl-data-table__cell--non-numeric">{{gamesCount}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{wins}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{draws}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{lost}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{goalsMade}} : {{goalsGot}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{points}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{/each}}
+  </div>
+</template>
