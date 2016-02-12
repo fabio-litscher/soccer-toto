@@ -1,4 +1,2 @@
 # soccer-toto
-first commit
-
-# Webapp for betting at soccer championships
+meteor based webapp for betting on soccer championships
