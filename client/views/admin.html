@@ -116,7 +116,23 @@
 <template name="adminCredits">
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h6>Guthaben an User schicken</h6>
+      <p>Hier können Sie Guthaben an einen Benutzer schicken.</p>
+
+      <form id="sendCredits">
+        <div id="userForCredits" class="mdl-textfield mdl-js-textfield">
+          <select class="mdl-textfield__input" id="usersList" name="usersList" required>
+            <option selected disabled>Benutzer</option>
+            {{#each user}}
+              <option value="{{_id}}">{{profile.shortname}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div id="creditsToLoad" class="mdl-textfield mdl-js-textfield">
+          <input class="resultInput mdl-textfield__input" id="numberOfCredits" type="number" name="numberOfCredits" placeholder="Anzahl Credits" required>
+        </div>
+        <button id="sendCredits" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Guthaben schicken</button>
+      </form>
+
     </div>
   </div>
 </template>

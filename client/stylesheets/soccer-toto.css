@@ -36,3 +36,10 @@
 #groupsTable th, #groupsTable td {
   padding: 8px;
 }
+
+#userForCredits {
+  width: auto;
+}
+#creditsToLoad {
+  width: 130px;
+}

@@ -137,11 +137,12 @@ Template.adminResults.events({
     var gameId = this._id;
     var resultTeam1 = event.target.resultTeam1.value;
     var resultTeam2 = event.target.resultTeam2.value;
+    var bet = 2;
 
     event.target.resultTeam1.value = "";
     event.target.resultTeam2.value = "";
 
-    Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2);
+    Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet);
   }
 });
 
@@ -186,5 +187,28 @@ Template.adminResults.helpers({
     } else {
       return true;
     }
+  }
+});
+
+// adminCredits template events
+Template.adminCredits.events({
+  'submit form#sendCredits': function(){
+    event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
+    var selectedUser = Session.get('selectedUser');
+    var creditsToLoad = event.target.numberOfCredits.value;
+    event.target.numberOfCredits.value = "";
+
+    Meteor.call('addCredits', selectedUser, creditsToLoad);
+  },
+  'change #usersList': function(event){
+    var userId = $(event.target).val();
+    Session.set('selectedUser', userId);
+  }
+});
+
+// adminCredits template helpers
+Template.adminCredits.helpers({
+  'user': function() {
+    return Meteor.users.find({});
   }
 });

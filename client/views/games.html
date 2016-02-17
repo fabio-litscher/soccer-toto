@@ -37,11 +37,16 @@
           <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">
             <form id="addBetResult">
-              <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
-                <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
-              </div>
-              <button id="addGameResult" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wette abschliessen</button>
+              {{#if canBet}}
+                <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
+                  <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wette abschliessen</button>
+              {{/if}}
             </form>
+            {{#each madeBet}}
+              {{result1}}:{{result2}} |
+            {{/each}}
           </td>
         </tr>
       {{/each}}
@@ -51,7 +56,7 @@
 
 
 <template name="finishedGames">
-  <table class="mdl-data-table mdl-js-data-table">
+  <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
     <thead>
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Datum</th>

@@ -10,8 +10,8 @@ Template.groupOverview.helpers({
   },
   'teams': function() {
     return TeamList.find({group: this._id}, {sort: {points: -1} }).map(function(document, index) {
-            document.index = index + 1;
-            return document;
-        });
+      document.index = index + 1;
+      return document;
+    });
   }
 });

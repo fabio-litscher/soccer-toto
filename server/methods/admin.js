@@ -36,7 +36,7 @@ Meteor.methods({
       team2: gameTeam2
     });
   },
-  'insertGameResult': function(gameId, resultTeam1, resultTeam2) {
+  'insertGameResult': function(gameId, resultTeam1, resultTeam2, bet) {
     GameList.update(
       { _id: gameId },
       { $set:
@@ -83,5 +83,23 @@ Meteor.methods({
     else {
       // wenn kein gruppenspiel
     }
+
+    // Credits neu verteilen
+    // Pot ausrechnen, anhand von anzahl wetten & wetteinsatz
+    var totalBets = BetList.find({ game: gameId }, {}).count();
+    var totalGamePot = totalBets * bet;
+
+    // Pot auf alle richtigen Ergebnisse aufteilen
+    var countCorrectBets = BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).count();
+    var creditsPerBet = totalGamePot / countCorrectBets;
+
+    BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).forEach( function(doc) {
+      Meteor.call('addCredits', doc.user, creditsPerBet);
+    });
+
+    console.log(totalBets);
+    console.log(totalGamePot);
+    console.log(countCorrectBets);
+    console.log(creditsPerBet);
   }
 });

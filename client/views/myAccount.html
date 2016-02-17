@@ -1,3 +1,80 @@
 <template name="myAccount">
   <h1>Mein Konto</h1>
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Meine Profil-Informationen</h4>
+      {{> profileData}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      {{> userCredits}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Meine Tipps</h4>
+      {{>userBets}}
+    </div>
+  </div>
+</template>
+
+
+<template name="profileData">
+
+</template>
+
+
+<template name="userCredits">
+  <h4>Mein Guthaben: <b>{{userCredits}}.- CHF</b></h4>
+  <p>
+    Zum Guthaben aufladen, bitte bei <b>John Steiger (stjo)</b> melden und abrechnen. <br>
+    Er kann das Guthaben dann auf Ihr Konto laden.
+  </p>
+</template>
+
+
+<template name="userBets">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>Auf Sieger des Turniers wetten</h5>
+      <p>
+        Sie können für 5.- CHF <b>einmalig</b> auf den Sieger des Turniers wetten.<br>
+        Tipps können nur bis zum Start des ersten Spieles abgegeben werden!
+      </p>
+      {{#if winnerTeam}}
+        <p>Sie haben bereits auf einen Sieger gesetzt: <b>{{winnerTeam.name}}</b></p>
+      {{else}}
+        <form id="addWinner">
+          <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
+            <select class="mdl-textfield__input" id="winnerTeam" name="winnerTeam" required>
+              <option selected disabled>Sieger-Team</option>
+              {{#each team}}
+                <option value="{{_id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Sieger setzen</button>
+        </form>
+      {{/if}}
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>Auf Torschützenkönig des Turniers wetten</h5>
+      <p>
+        Sie können für 5.- CHF <b>einmalig</b> auf den Torschützenkönig des Turniers wetten.<br>
+        Tipps können nur bis zum Start des ersten Spieles abgegeben werden!
+      </p>
+      {{#if topScorer}}
+        <p>Sie haben bereits auf einen Torschützenkönig gesetzt: <b>{{topScorer}}</b></p>
+      {{else}}
+        <form id="addTopScorer">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="topScorer" name="topScorer" required>
+            <label class="mdl-textfield__label" for="topScorer">Torschützenkönig</label>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Torschützenkönig setzen</button>
+        </form>
+      {{/if}}
+    </div>
+  </div>
 </template>
