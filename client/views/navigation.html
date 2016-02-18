@@ -36,7 +36,7 @@
           {{> games}}
         </div>
       </section>
-      <section class="mdl-layout__tab-panel" id="fixed-tab-4">
+      <section class="mdl-layout__tab-panel {{noUserHidden}}" id="fixed-tab-4">
         <div class="page-content">
           {{#if currentUser}}
             {{> myAccount}}
@@ -45,7 +45,7 @@
           {{/if}}
         </div>
       </section>
-      <section class="mdl-layout__tab-panel" id="fixed-tab-5">
+      <section class="mdl-layout__tab-panel {{noUserHidden}} {{noAdminHidden}}" id="fixed-tab-5">
         <div class="page-content">
           {{> admin}}
         </div>

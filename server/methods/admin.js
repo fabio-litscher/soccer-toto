@@ -96,15 +96,10 @@ Meteor.methods({
     BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).forEach( function(doc) {
       Meteor.call('addCredits', doc.user, creditsPerBet);
     });
-
-    console.log(totalBets);
-    console.log(totalGamePot);
-    console.log(countCorrectBets);
-    console.log(creditsPerBet);
   },
   'clearTeamStatistics': function() {
     TeamList.find({}, {}).forEach( function(doc) {
-      TeamList.update({ _id: doc._id }, { $unset: {points: "", wins: "", draws: "", lost: "", gamesCount: "", goalsMade: "", goalsGot: ""} });
+      TeamList.update({ _id: doc._id }, { $set: {points: 0, wins: 0, draws: 0, lost: 0, gamesCount: 0, goalsMade: 0, goalsGot: 0} });
     });
   },
   'clearGames': function() {
