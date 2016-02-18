@@ -77,8 +77,10 @@ Meteor.methods({
       }
 
       // Tore an Teams verteilen
-      TeamList.update({_id: game.team1}, { $set: {goalsMade: resultTeam1, goalsGot: resultTeam2} });
-      TeamList.update({_id: game.team2}, { $set: {goalsMade: resultTeam2, goalsGot: resultTeam1} });
+      var gamesCountTeam1 = TeamList.findOne({_id: game.team1}, {}).gamesCount + 1;
+      var gamesCountTeam2 = TeamList.findOne({_id: game.team2}, {}).gamesCount + 1;
+      TeamList.update({_id: game.team1}, { $set: {gamesCount: gamesCountTeam1, goalsMade: resultTeam1, goalsGot: resultTeam2} });
+      TeamList.update({_id: game.team2}, { $set: {gamesCount: gamesCountTeam2, goalsMade: resultTeam2, goalsGot: resultTeam1} });
     }
     else {
       // wenn kein gruppenspiel
