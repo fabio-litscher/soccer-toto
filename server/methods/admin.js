@@ -101,5 +101,13 @@ Meteor.methods({
     console.log(totalGamePot);
     console.log(countCorrectBets);
     console.log(creditsPerBet);
+  },
+  'clearTeamStatistics': function() {
+    TeamList.find({}, {}).forEach( function(doc) {
+      TeamList.update({ _id: doc._id }, { $unset: {points: "", wins: "", draws: "", lost: "", gamesCount: "", goalsMade: "", goalsGot: ""} });
+    });
+  },
+  'clearGames': function() {
+    GameList.remove({});
   }
 });

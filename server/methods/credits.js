@@ -39,5 +39,12 @@ Meteor.methods({
         credits: creditsToAdd
       });
     }
+  },
+  'deletePot': function(potName) {
+    // Pot aus PotList löschen
+    console.log(potName);
+    PotList.remove({ name: potName }, {});
+
+    // Bei allen Usern Wette für Pot löschen
   }
 });

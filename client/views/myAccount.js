@@ -46,7 +46,7 @@ Template.userBets.helpers({
     // if-Abfrage drum herum, weil am Anfang der Benutzer noch nicht geladen ist und dann undefined exception kommt,
     // erst beim re-render ist er dann geladen und dann klappt es
     if (Meteor.user()) {
-      var winnerTeamId = Meteor.user().profile.winnerTeam;
+      var winnerTeamId = Meteor.user().profile.winner;
       return TeamList.findOne({ _id: winnerTeamId }, {});
     }
   },

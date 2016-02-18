@@ -31,6 +31,9 @@ Template.adminTeams.events({
     var selectedTeam = Session.get('selectedTeam');
     var selectedTeamGroup = Session.get('selectedTeamGroup');
     Meteor.call('addTeamToGroup', selectedTeam, selectedTeamGroup);
+  },
+  'click #clearTeamStatistics': function() {
+    Meteor.call('clearTeamStatistics');
   }
 });
 
@@ -143,6 +146,9 @@ Template.adminResults.events({
     event.target.resultTeam2.value = "";
 
     Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet);
+  },
+  'click #clearGames': function(){
+    Meteor.call('clearGames');
   }
 });
 
@@ -203,6 +209,12 @@ Template.adminCredits.events({
   'change #usersList': function(event){
     var userId = $(event.target).val();
     Session.set('selectedUser', userId);
+  },
+  'click #delWinnerPot': function(){
+    Meteor.call('deletePot', "winner");
+  },
+  'click #delTopScorerPot': function(){
+    Meteor.call('deletePot', "topScorer");
   }
 });
 
