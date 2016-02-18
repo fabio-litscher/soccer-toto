@@ -11,9 +11,9 @@
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Home</a>
         <a href="#fixed-tab-2" class="mdl-layout__tab">Gruppenübersicht</a>
-        <a href="#fixed-tab-3" class="mdl-layout__tab">Spielplan & Wetten</a>
-        <a href="#fixed-tab-4" class="mdl-layout__tab">Mein Konto</a>
-        <a href="#fixed-tab-5" class="mdl-layout__tab">Admin</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab">Spielplan &amp; Wetten</a>
+        <a href="#fixed-tab-4" class="mdl-layout__tab {{noUserHidden}}">Mein Konto</a>
+        <a href="#fixed-tab-5" class="mdl-layout__tab {{noUserHidden}} {{noAdminHidden}}">Admin</a>
       </div>
     </header>
     <!-- Navigation links zum einblenden -->
@@ -38,16 +38,16 @@
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-4">
         <div class="page-content">
-          {{> myAccount}}
+          {{#if currentUser}}
+            {{> myAccount}}
+          {{else}}
+          <h3>Sie müssen eingeloggt sein um auf Ihr Konto zugreifen zu können!</h3>
+          {{/if}}
         </div>
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-5">
         <div class="page-content">
-          {{#if userIsAdmin}}
-            {{> admin}}
-          {{else}}
-            <h2>Unzureichende Berechtigungen!</h2>
-          {{/if}}
+          {{> admin}}
         </div>
       </section>
 

@@ -210,5 +210,17 @@ Template.adminCredits.events({
 Template.adminCredits.helpers({
   'user': function() {
     return Meteor.users.find({});
+  },
+  'winnerPot': function() {
+    var exists = PotList.findOne({ name: "winner" }, {});
+    if(exists) {
+      return PotList.findOne({ name: "winner"}, {}).credits;
+    }
+  },
+  'topScorerPot': function() {
+    var exists = PotList.findOne({ name: "topScorer" }, {});
+    if(exists) {
+      return PotList.findOne({ name: "topScorer"}, {}).credits;
+    }
   }
 });

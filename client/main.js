@@ -3,7 +3,7 @@ Meteor.subscribe('theTeams');
 Meteor.subscribe('theGroups');
 Meteor.subscribe('theGames');
 Meteor.subscribe('theBet');
-Meteor.subscribe('ThePots');
+Meteor.subscribe('thePots');
 Meteor.subscribe("users");
 
 Accounts.ui.config({

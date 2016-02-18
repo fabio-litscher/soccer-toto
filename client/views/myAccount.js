@@ -9,6 +9,7 @@ Template.userBets.events({
       if(enoughCredits == true) {
         Meteor.call('addWinner', Meteor.userId(), winnerTeam);
         Meteor.call('debitCredits', Meteor.userId(), creditsNeeded);
+        Meteor.call('creditsToPot', "winner", creditsNeeded);
       } else {
         alert("Sie haben zu wenig Guthaben um die Aktion durchzuführen!");
       }
@@ -23,6 +24,7 @@ Template.userBets.events({
       if(enoughCredits == true) {
         Meteor.call('addTopScorer', Meteor.userId(), topScorer);
         Meteor.call('debitCredits', Meteor.userId(), creditsNeeded);
+        Meteor.call('creditsToPot', "topScorer", creditsNeeded);
       } else {
         alert("Sie haben zu wenig Guthaben um die Aktion durchzuführen!");
       }

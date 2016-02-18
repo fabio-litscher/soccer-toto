@@ -24,5 +24,20 @@ Meteor.methods({
       var credits = creditsToLoad;
     }
     Meteor.users.update(userId, { $set: {"profile.credits": credits} });
+  },
+  'creditsToPot': function(potName, creditsToAdd) {
+    creditsToAdd = parseInt(creditsToAdd);
+    var exists = PotList.findOne({ name: potName }, {});
+
+    if(exists) {
+      var potBefore = PotList.findOne({ name: potName }, {}).credits;
+      var newPot = potBefore + creditsToAdd;
+      PotList.update({name: potName}, { $set: {credits: newPot} });
+    } else {
+      PotList.insert({
+        name: potName,
+        credits: creditsToAdd
+      });
+    }
   }
 });
