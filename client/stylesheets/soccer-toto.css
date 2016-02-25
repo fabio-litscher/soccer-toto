@@ -21,7 +21,11 @@
   margin-right: 4px;
 }
 
-#gameDateDiv, #gameTimeDiv, #gameGroupDiv, #gameTeam1Div, #gameTeam2Div, #resultInputDiv {
+#knockoutRound, #knockoutWinner {
+  outline: none;
+}
+
+#gameDateDiv, #gameTimeDiv, #gameGroupDiv, #gameTeam1Div, #gameTeam2Div, #resultInputDiv, #knockoutRoundDiv, #knockoutWinnerDiv {
   width: auto;
 }
 

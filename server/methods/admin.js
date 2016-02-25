@@ -27,29 +27,31 @@ Meteor.methods({
   'addTeamToGroup': function(selectedTeam, selectedTeamGroup) {
     TeamList.update({_id: selectedTeam}, { $set: {group: selectedTeamGroup} });
   },
-  'insertNewGame': function(gameDate, gameTime, gameGroup, gameTeam1, gameTeam2) {
+  'insertNewGame': function(gameDate, gameTime, gameGroup, gameTeam1, gameTeam2, knockoutRound) {
     GameList.insert({
       date: gameDate,
       time: gameTime,
       group: gameGroup,
       team1: gameTeam1,
-      team2: gameTeam2
+      team2: gameTeam2,
+      knockoutRound: knockoutRound,
+      knockoutWinner: null
     });
   },
-  'insertGameResult': function(gameId, resultTeam1, resultTeam2, bet) {
-    GameList.update(
-      { _id: gameId },
-      { $set:
-        {
-          result1: resultTeam1,
-          result2: resultTeam2
-        }
-      }
-    );
+  'insertGameResult': function(gameId, resultTeam1, resultTeam2, bet, knockoutWinner) {
 
     // Punkte, Sieg/Niederlage/Unentschieden, Tore an Teams verteilen, wenn Gruppenspiel
     var game = GameList.findOne({_id: gameId}, {});
     if (game.group != "noGroupGame") {
+      GameList.update(
+        { _id: gameId },
+        { $set:
+          {
+            result1: resultTeam1,
+            result2: resultTeam2
+          }
+        }
+      );
       if (resultTeam1 > resultTeam2) {                                                                    // Team1 hat gewonnen
         var pointsTeam1 = TeamList.findOne({_id: game.team1}, {}).points + 3;
         var winsTeam1 = TeamList.findOne({_id: game.team1}, {}).wins + 1;
@@ -84,6 +86,16 @@ Meteor.methods({
     }
     else {
       // wenn kein gruppenspiel
+      GameList.update(
+        { _id: gameId },
+        { $set:
+          {
+            result1: resultTeam1,
+            result2: resultTeam2,
+            knockoutWinner: knockoutWinner
+          }
+        }
+      );
     }
 
     // Credits neu verteilen

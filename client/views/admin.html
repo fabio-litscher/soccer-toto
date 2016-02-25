@@ -2,12 +2,12 @@
   <h2>Administration</h2>
 
   <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-cell mdl-cell--5-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <h4>Guthaben</h4>
       {{> adminCredits}}
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-cell mdl-cell--7-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <h4>Spiele & Ergebnisse</h4>
       {{> adminResults}}
     </div>
@@ -162,16 +162,27 @@
         </div>
         <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
           <select class="mdl-textfield__input" id="gameGroup" name="gameGroup" required>
-            <option selected disabled>Gruppe</option>
+            <option value="default" selected disabled>Gruppe</option>
             <option value="noGroupGame">Kein Gruppenspiel</option>
             {{#each group}}
               <option value="{{_id}}">{{name}}</option>
             {{/each}}
           </select>
         </div>
+        {{#if noGroupGame}}
+          <div id="knockoutRoundDiv" class="mdl-textfield mdl-js-textfield">
+            <select class="mdl-textfield__input" id="knockoutRound" name="knockoutRound" required>
+              <option value="default" selected disabled>KO-Runde</option>
+              <option value="Achtelfinale">Achtelfinale</option>
+              <option value="Viertelfinale">Viertelfinale</option>
+              <option value="Halbfinale">Halbfinale</option>
+              <option value="Finale">Finale</option>
+            </select>
+          </div>
+        {{/if}}
         <div id="gameTeam1Div" class="mdl-textfield mdl-js-textfield">
           <select class="mdl-textfield__input" id="gameTeam1" name="gameTeam1" required>
-            <option selected disabled>Team 1</option>
+            <option value="default" selected disabled>Team 1</option>
             {{#each team}}
               <option value="{{_id}}">{{name}}</option>
             {{/each}}
@@ -179,7 +190,7 @@
         </div>
         <div id="gameTeam2Div" class="mdl-textfield mdl-js-textfield">
           <select class="mdl-textfield__input" id="gameTeam2" name="gameTeam2" required>
-            <option selected disabled>Team 2</option>
+            <option value="default" selected disabled>Team 2</option>
             {{#each team}}
               <option value="{{_id}}">{{name}}</option>
             {{/each}}
@@ -188,6 +199,7 @@
         <button id="addGame" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Spiel hinzufügen</button>
       </form>
     </div>
+
     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <button id="clearGames" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Alle Spiele löschen</button>
       <table class="mdl-data-table mdl-js-data-table">
@@ -195,31 +207,64 @@
           <tr>
             <th class="mdl-data-table__cell--non-numeric">Datum</th>
             <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
-            <th class="mdl-data-table__cell--non-numeric">Gruppe</th>
+            <th class="mdl-data-table__cell--non-numeric">Gruppe / Runde</th>
             <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
             <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
-            <th class="mdl-data-table__cell--non-numeric">Ergebnis</th>
+            <th class="mdl-data-table__cell--non-numeric">Ergebnis / Sieger</th>
           </tr>
         </thead>
         <tbody>
-          {{#each game}}
+          {{#each openGames}}
             <tr>
               <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
               <td>{{time}}</td>
-              <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+              <td class="mdl-data-table__cell--non-numeric">
+                {{#if groupName}}
+                  {{groupName}}
+                {{else}}
+                  {{knockoutRound}}
+                {{/if}}
+              </td>
               <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
               <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
               <td class="mdl-data-table__cell--non-numeric">
-                {{#if hasResult}}
-                  {{result1}} : {{result2}}
+                <form id="addGameResult">
+                  <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
+                    <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
+                  </div>
+                  {{#unless groupName}}
+                  <div id="knockoutWinnerDiv" class="mdl-textfield mdl-js-textfield">
+                    <select class="mdl-textfield__input" id="knockoutWinner" name="knockoutWinner" required>
+                      <option value="default" selected disabled>Sieger</option>
+                      <option value="{{team1._id}}">{{team1.name}}</option>
+                      <option value="{{team2._id}}">{{team2.name}}</option>
+                    </select>
+                  </div>
+                  {{/unless}}
+                  <button id="addGameResult" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Speichern</button>
+                </form>
+              </td>
+            </tr>
+          {{/each}}
+
+          {{#each doneGames}}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+              <td>{{time}}</td>
+              <td class="mdl-data-table__cell--non-numeric">
+                {{#if groupName}}
+                  {{groupName}}
                 {{else}}
-                  <form id="addGameResult">
-                    <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
-                      <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
-                    </div>
-                    <button id="addGameResult" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Speichern</button>
-                  </form>
+                  <b>{{knockoutRound}}</b>
                 {{/if}}
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
+              <td class="mdl-data-table__cell--non-numeric">
+                {{result1}} : {{result2}}
+                {{#unless groupName}}
+                   - <b>{{winnerTeam.name}}</b>
+                {{/unless}}
               </td>
             </tr>
           {{/each}}

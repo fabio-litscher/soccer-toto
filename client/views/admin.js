@@ -125,14 +125,22 @@ Template.adminResults.events({
     var gameGroup = event.target.gameGroup.value;
     var gameTeam1 = event.target.gameTeam1.value;
     var gameTeam2 = event.target.gameTeam2.value;
+    if(gameGroup === "noGroupGame") {
+      var knockoutRound = event.target.knockoutRound.value;
+    } else {
+      var knockoutRound = "";
+    }
 
     event.target.gameDate.value = "";
     event.target.gameTime.value = "";
-    event.target.gameGroup.value = "";
-    event.target.gameTeam1.value = "";
-    event.target.gameTeam2.value = "";
+    event.target.gameGroup.value = "default";
+    event.target.gameTeam1.value = "default";
+    event.target.gameTeam2.value = "default";
+    if(gameGroup === "noGroupGame") {
+      event.target.knockoutRound.value = "default";
+    }
 
-    Meteor.call('insertNewGame', gameDate, gameTime, gameGroup, gameTeam1, gameTeam2);
+    Meteor.call('insertNewGame', gameDate, gameTime, gameGroup, gameTeam1, gameTeam2, knockoutRound);
   },
   'submit form#addGameResult': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
@@ -141,11 +149,15 @@ Template.adminResults.events({
     var resultTeam1 = event.target.resultTeam1.value;
     var resultTeam2 = event.target.resultTeam2.value;
     var bet = 2;
+    if(GameList.findOne({_id: gameId}).group == "noGroupGame") {
+      var knockoutWinner = event.target.knockoutWinner.value;
+      console.log(knockoutWinner);
+    }
 
     event.target.resultTeam1.value = "";
     event.target.resultTeam2.value = "";
 
-    Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet);
+    Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet, knockoutWinner);
   },
   'click #clearGames': function(){
     Meteor.call('clearGames');
@@ -168,8 +180,11 @@ Template.adminResults.helpers({
       return TeamList.find({group: gameGroup}, {sort: {name: 1} });
     }
   },
-  'game': function() {
-    return GameList.find({}, {sort: {date: 1, time: 1} });
+  'doneGames': function() {
+    return GameList.find({ result1: { $exists: true } }, {sort: {date: 1, time: 1} });
+  },
+  'openGames': function() {
+    return GameList.find({ result1: { $exists: false } }, {sort: {date: 1, time: 1} });
   },
   'team1': function() {
     var team1 = TeamList.findOne({_id: this.team1});
@@ -181,7 +196,7 @@ Template.adminResults.helpers({
   },
   'groupName': function() {
     if(this.group == "noGroupGame") {
-      return "-";
+      return false;
     } else {
       var groupName = GroupList.findOne({_id: this.group}).name;
       return groupName;
@@ -193,6 +208,15 @@ Template.adminResults.helpers({
     } else {
       return true;
     }
+  },
+  'noGroupGame': function() {
+    var gameGroup = Session.get('gameGroup');
+    if(gameGroup === 'noGroupGame') {
+      return true;
+    }
+  },
+  'winnerTeam': function() {
+    return TeamList.findOne({ _id: this.knockoutWinner }, {});
   }
 });
 
