@@ -21,7 +21,7 @@
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Datum</th>
         <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
-        <th class="mdl-data-table__cell--non-numeric">Gruppe</th>
+        <th class="mdl-data-table__cell--non-numeric">Gruppe / Runde</th>
         <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
         <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
         <th class="mdl-data-table__cell--non-numeric">Auf Ergebnis wetten</th>
@@ -32,24 +32,34 @@
         <tr>
           <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+          <td class="mdl-data-table__cell--non-numeric">
+            {{#if groupName}}
+              {{groupName}}
+            {{else}}
+              <b>{{knockoutRound}}</b>
+            {{/if}}
+          </td>
           <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">
-            {{#if currentUser}}
-              <form id="addBetResult">
-                {{#if canBet}}
-                  <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
-                    <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
-                  </div>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wette abschliessen</button>
-                {{/if}}
-              </form>
-              {{#each madeBet}}
-                {{result1}}:{{result2}} |
-              {{/each}}
+            {{#if datetimeOk}}
+              {{#if currentUser}}
+                <form id="addBetResult">
+                  {{#if canBet}}
+                    <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
+                      <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wette abschliessen</button>
+                  {{/if}}
+                </form>
+                {{#each madeBet}}
+                  {{result1}}:{{result2}} |
+                {{/each}}
+              {{else}}
+                <span>Bitte einloggen um Wette abzugeben!</span>
+              {{/if}}
             {{else}}
-              <span>Bitte einloggen um Wette abzugeben!</span>
+              <span>Wetten abgeben nicht mehr möglich!</span>
             {{/if}}
           </td>
         </tr>
@@ -65,10 +75,10 @@
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Datum</th>
         <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
-        <th class="mdl-data-table__cell--non-numeric">Gruppe</th>
+        <th class="mdl-data-table__cell--non-numeric">Gruppe / Runde</th>
         <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
         <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
-        <th class="mdl-data-table__cell--non-numeric">Ergebnis</th>
+        <th class="mdl-data-table__cell--non-numeric">Ergebnis / Sieger</th>
       </tr>
     </thead>
     <tbody>
@@ -76,10 +86,21 @@
         <tr>
           <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{groupName}}</td>
+          <td class="mdl-data-table__cell--non-numeric">
+            {{#if groupName}}
+              {{groupName}}
+            {{else}}
+              <b>{{knockoutRound}}</b>
+            {{/if}}
+          </td>
           <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{result1}} : {{result2}}</td>
+          <td class="mdl-data-table__cell--non-numeric">
+            {{result1}} : {{result2}}
+            {{#unless groupName}}
+               - <b>{{winnerTeam.name}}</b>
+            {{/unless}}
+          </td>
         </tr>
       {{/each}}
     </tbody>

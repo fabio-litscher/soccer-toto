@@ -1,5 +1,10 @@
 <template name="groups">
-  <h1>Gruppen</h1>
+  {{#if knockoutCount}}
+    <h2>Finalrunden</h2>
+    {{> knockoutOverview}}
+  {{/if}}
+
+  <h2>Gruppenübersicht</h2>
   {{> groupOverview}}
 </template>
 
@@ -40,4 +45,134 @@
     </div>
     {{/each}}
   </div>
+</template>
+
+
+<template name="knockoutOverview">
+  {{#if knockoutFinalCount}}
+  <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h3>Finale</h3>
+        <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Datum</th>
+              <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
+              <th class="mdl-data-table__cell--non-numeric">Ergebnis nach offizieller Spielzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Sieger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each knockoutFinal}}
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName1}} - {{team1.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName2}} - {{team2.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{result1}} : {{result2}}</td>
+                <td class="mdl-data-table__cell--non-numeric"><b>{{winnerTeam.name}}</b></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if knockoutSemiCount}}<div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h3>Halbfinale</h3>
+        <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Datum</th>
+              <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
+              <th class="mdl-data-table__cell--non-numeric">Ergebnis nach offizieller Spielzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Sieger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each knockoutSemi}}
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName1}} - {{team1.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName2}} - {{team2.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{result1}} : {{result2}}</td>
+                <td class="mdl-data-table__cell--non-numeric"><b>{{winnerTeam.name}}</b></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if knockoutQuarterCount}}
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h3>Viertelfinale</h3>
+        <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Datum</th>
+              <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
+              <th class="mdl-data-table__cell--non-numeric">Ergebnis nach offizieller Spielzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Sieger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each knockoutQuarter}}
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName1}} - {{team1.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName2}} - {{team2.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{result1}} : {{result2}}</td>
+                <td class="mdl-data-table__cell--non-numeric"><b>{{winnerTeam.name}}</b></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if knockoutEighthCount}}
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h3>Achtelfinale</h3>
+        <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Datum</th>
+              <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 1</th>
+              <th class="mdl-data-table__cell--non-numeric">Mannschaft 2</th>
+              <th class="mdl-data-table__cell--non-numeric">Ergebnis nach offizieller Spielzeit</th>
+              <th class="mdl-data-table__cell--non-numeric">Sieger</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each knockoutEighth}}
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{time}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName1}} - {{team1.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{groupName2}} - {{team2.name}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{result1}} : {{result2}}</td>
+                <td class="mdl-data-table__cell--non-numeric"><b>{{winnerTeam.name}}</b></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{/if}}
 </template>

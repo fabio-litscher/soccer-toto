@@ -27,7 +27,7 @@ Template.openGames.helpers({
   },
   'groupName': function() {
     if(this.group == "noGroupGame") {
-      return "-";
+      return false;
     } else {
       var groupName = GroupList.findOne({_id: this.group}).name;
       return groupName;
@@ -51,6 +51,23 @@ Template.openGames.helpers({
     } else {
       return false;
     }
+  },
+  'datetimeOk': function() {
+    // überprüfung ob noch gewettet werden kann, wenn spiel schon angefangen false, sonst true zurückgeben
+    var q = new Date();
+    var m = q.getMonth();
+    var d = q.getDate();
+    var y = q.getFullYear();
+
+    var todaysDate = new Date(y,m,d);
+    var gameDate = new Date(this.date);
+
+    if(todaysDate > gameDate) {
+      return false;
+    } else {
+      // überprüfung auf Zeit fehlt noch
+      return true;
+    }
   }
 });
 
@@ -58,11 +75,11 @@ Template.openGames.helpers({
 // closedGames template helpers
 Template.finishedGames.helpers({
   'closedGames': function() {
-    return GameList.find({result1: { $exists: true } }, {sort: {date: 1, time: 1} });
+    return GameList.find({result1: { $exists: true } }, {sort: {date: -1, time: -1} });
   },
   'groupName': function() {
     if(this.group == "noGroupGame") {
-      return "-";
+      return false;
     } else {
       var groupName = GroupList.findOne({_id: this.group}).name;
       return groupName;
@@ -75,5 +92,8 @@ Template.finishedGames.helpers({
   'team2': function() {
     var team2 = TeamList.findOne({_id: this.team2});
     return team2;
+  },
+  'winnerTeam': function() {
+    return TeamList.findOne({ _id: this.knockoutWinner }, {});
   }
 });
