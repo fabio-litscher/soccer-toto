@@ -1,3 +1,10 @@
+// navigation template events
+Template.navigation.events({
+  '': function(){
+
+  }
+});
+
 // navigation template helpers
 Template.navigation.helpers({
   'noAdminHidden': function() {
