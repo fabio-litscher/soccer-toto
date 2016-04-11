@@ -53,19 +53,15 @@ Template.openGames.helpers({
     }
   },
   'datetimeOk': function() {
+    // Timer erstellen, so wird die reaktive Funktion (dieser Helper) alle "ReactiveTimer(X)" X-Sekunden ausgeführt
+    var myTimer = new ReactiveTimer(30);
+    myTimer.tick();
+
     // überprüfung ob noch gewettet werden kann, wenn spiel schon angefangen false, sonst true zurückgeben
-    var q = new Date();
-    var m = q.getMonth();
-    var d = q.getDate();
-    var y = q.getFullYear();
-
-    var todaysDate = new Date(y,m,d);
-    var gameDate = new Date(this.date);
-
-    if(todaysDate > gameDate) {
+    var now = new Date();
+    if(now > this.datetime) {
       return false;
     } else {
-      // überprüfung auf Zeit fehlt noch
       return true;
     }
   }

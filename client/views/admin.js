@@ -131,6 +131,14 @@ Template.adminResults.events({
       var knockoutRound = "";
     }
 
+    // Date object erstellen
+    var year = gameDate.substring(0,4);
+    var month = gameDate.substring(5,7)-1;
+    var day = gameDate.substring(8,10);
+    var hour = gameTime.substring(0,2);
+    var minute = gameTime.substring(3,5);
+    var gameDateTime = new Date(year, month, day, hour, minute);
+
     event.target.gameDate.value = "";
     event.target.gameTime.value = "";
     event.target.gameGroup.value = "default";
@@ -140,7 +148,7 @@ Template.adminResults.events({
       event.target.knockoutRound.value = "default";
     }
 
-    Meteor.call('insertNewGame', gameDate, gameTime, gameGroup, gameTeam1, gameTeam2, knockoutRound);
+    Meteor.call('insertNewGame', gameDate, gameTime, gameDateTime, gameGroup, gameTeam1, gameTeam2, knockoutRound);
   },
   'submit form#addGameResult': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird

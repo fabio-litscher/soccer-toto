@@ -27,10 +27,11 @@ Meteor.methods({
   'addTeamToGroup': function(selectedTeam, selectedTeamGroup) {
     TeamList.update({_id: selectedTeam}, { $set: {group: selectedTeamGroup} });
   },
-  'insertNewGame': function(gameDate, gameTime, gameGroup, gameTeam1, gameTeam2, knockoutRound) {
+  'insertNewGame': function(gameDate, gameTime, gameDateTime, gameGroup, gameTeam1, gameTeam2, knockoutRound) {
     GameList.insert({
       date: gameDate,
       time: gameTime,
+      datetime: gameDateTime,
       group: gameGroup,
       team1: gameTeam1,
       team2: gameTeam2,
