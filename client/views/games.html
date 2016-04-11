@@ -42,8 +42,8 @@
           <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
           <td class="mdl-data-table__cell--non-numeric">
-            {{#if datetimeOk}}
-              {{#if currentUser}}
+            {{#if currentUser}}
+              {{#if datetimeOk}}
                 <form id="addBetResult">
                   {{#if canBet}}
                     <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
@@ -56,10 +56,16 @@
                   {{result1}}:{{result2}} |
                 {{/each}}
               {{else}}
-                <span>Bitte einloggen um Wette abzugeben!</span>
+                {{#if madeBet.count}}
+                  {{#each madeBet}}
+                    {{result1}}:{{result2}} |
+                  {{/each}}
+                  <br />
+                {{/if}}
+                <span>Wetten abgeben nicht mehr möglich!</span>
               {{/if}}
             {{else}}
-              <span>Wetten abgeben nicht mehr möglich!</span>
+              <span>Bitte einloggen um Wette abzugeben!</span>
             {{/if}}
           </td>
         </tr>

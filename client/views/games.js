@@ -53,7 +53,7 @@ Template.openGames.helpers({
     }
   },
   'datetimeOk': function() {
-    // Timer erstellen, so wird die reaktive Funktion (dieser Helper) alle "ReactiveTimer(X)" X-Sekunden ausgeführt
+    // Timer erstellen, so wird die reaktive Funktion (dieser Helper) alle X-Sekunden ausgeführt
     var myTimer = new ReactiveTimer(30);
     myTimer.tick();
 
