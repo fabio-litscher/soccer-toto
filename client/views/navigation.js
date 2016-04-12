@@ -10,7 +10,7 @@ Template.navigation.helpers({
   'noAdminHidden': function() {
     if (Meteor.user()) {
       var shortname = Meteor.user().profile.shortname;
-      var admins = ["stjo", "bret", "lfab", ""];                          // vorläufig einfach alle Admins in einem Array gespeichert, später in DB
+      var admins = ["stjo", "bret", "lfab", ""];              // vorläufig einfach alle Admins in einem Array gespeichert, später evtl in collection
 
       if(admins.indexOf(shortname) > -1) {
         return true;

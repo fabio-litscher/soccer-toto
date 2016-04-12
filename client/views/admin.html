@@ -49,8 +49,8 @@
     {{/each}}
     {{#if teamSelected}}
       <button id="removeTeam" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Mannschaft löschen</button>
-      <br>
-      <hr>
+      <br />
+      <hr />
       <h5>Gruppenzuweisung für die Mannschaft: <b>{{teamSelected.name}}</b></h5>
       <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
@@ -81,7 +81,7 @@
   </form>
 
   <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       <ul class="mdl-list">
         {{#each group }}
           <li class="group {{selectedClass}} mdl-list__item">
@@ -99,7 +99,7 @@
     <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone">
       <h5 class="groupTeamsTitle">{{groupSelected.name}}</h5>
     </div>
-    <div class="mdl-cell mdl-cell--5-col mdl-cell--7-col-tablet mdl-cell--3-col-phone">
+    <div class="mdl-cell mdl-cell--5-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
       <ul class="mdl-list">
         {{#each groupTeams }}
           <li class="mdl-list__item">
