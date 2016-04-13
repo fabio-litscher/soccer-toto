@@ -205,6 +205,7 @@
       <table class="mdl-data-table mdl-js-data-table">
         <thead>
           <tr>
+            <th class="mdl-data-table__cell--non-numeric">Löschen</th>
             <th class="mdl-data-table__cell--non-numeric">Datum</th>
             <th class="mdl-data-table__cell--non-numeric">Uhrzeit</th>
             <th class="mdl-data-table__cell--non-numeric">Gruppe / Runde</th>
@@ -216,6 +217,7 @@
         <tbody>
           {{#each openGames}}
             <tr>
+              <td class="mdl-data-table__cell--non-numeric"><a class="delGame" gameId="{{_id}}" href=""><i class="material-icons">delete</i></a></td>
               <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
               <td>{{time}}</td>
               <td class="mdl-data-table__cell--non-numeric">

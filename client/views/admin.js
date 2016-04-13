@@ -169,6 +169,14 @@ Template.adminResults.events({
   },
   'click #clearGames': function(){
     Meteor.call('clearGames');
+  },
+  'click .delGame': function(event){
+    event.preventDefault();
+
+    var gameId = event.currentTarget.getAttribute("gameId");              // jQuery Variante: $(event.currentTarget).attr("gameId");
+    if(confirm("Sind Sie sicher dass Sie das Spiel löschen möchten?")) {
+      Meteor.call('removeGame', gameId);
+    }
   }
 });
 

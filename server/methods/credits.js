@@ -41,10 +41,13 @@ Meteor.methods({
     }
   },
   'deletePot': function(potName) {
-    // Pot aus PotList löschen
-    console.log(potName);
-    PotList.remove({ name: potName }, {});
 
     // Bei allen Usern Wette für Pot löschen
+    Meteor.users.find({ "profile.winner": { $exists: true } }, {}).forEach( function(doc) {
+      Meteor.users.update({_id: doc._id}, { $unset: { "profile.winner": "" } });
+    });
+
+    // Pot aus PotList löschen
+    PotList.remove({ name: potName }, {});
   }
 });

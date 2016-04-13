@@ -145,5 +145,8 @@ Meteor.methods({
   },
   'clearGames': function() {
     GameList.remove({});
+  },
+  'removeGame': function(gameId) {
+    GameList.remove({ _id: gameId });
   }
 });
