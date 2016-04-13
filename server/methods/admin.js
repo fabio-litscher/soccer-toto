@@ -14,6 +14,10 @@ Meteor.methods({
     });
   },
   'removeTeam': function(selectedTeam) {
+    // Alle Spiele löschen in der die Mannschaft vorkommt
+    GameList.find({ $or: [ { team1: selectedTeam }, { team2: selectedTeam } ] }, {}).forEach( function(doc) {
+      GameList.remove({ _id: doc._id });
+    });
     TeamList.remove({_id: selectedTeam});
   },
   'insertNewGroup': function(groupName) {
@@ -22,6 +26,15 @@ Meteor.methods({
     });
   },
   'removeGroup': function(selectedGroup) {
+    // Gruppe aus allen Teams löschen, die diese Gruppe hinterlegt haben
+    TeamList.find({ group: selectedGroup }, {}).forEach( function(doc) {
+      TeamList.update({_id: doc._id}, { $unset: {group: ""} });
+    });
+    // Alle Gruppenspiele der zu löschenden Gruppe löschen
+    GameList.find({ group: selectedGroup }, {}).forEach( function(doc) {
+      GameList.remove({ _id: doc._id });
+    });
+    // Gruppe aus collection löschen
     GroupList.remove({_id: selectedGroup});
   },
   'addTeamToGroup': function(selectedTeam, selectedTeamGroup) {
