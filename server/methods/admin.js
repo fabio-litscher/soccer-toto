@@ -107,10 +107,23 @@ Meteor.methods({
     // Pot auf alle richtigen Ergebnisse aufteilen
     var countCorrectBets = BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).count();
     var creditsPerBet = totalGamePot / countCorrectBets;
+    creditsPerBet = Math.floor(creditsPerBet);
 
+    // Credits an entsprechende User übertragen
+    var countUsers = 0;
     BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).forEach( function(doc) {
       Meteor.call('addCredits', doc.user, creditsPerBet);
+      countUsers = countUsers + 1;
     });
+
+    // Rundungsdifferenz in Sieger-Pott übertragen
+    var roundingDifference = totalGamePot - countUsers * creditsPerBet;
+
+    console.log("total gamepot: "+totalGamePot);
+    console.log("pro spieler: "+creditsPerBet);
+    console.log("Differenz: "+roundingDifference);
+
+    Meteor.call('creditsToPot', "winner", roundingDifference);
   },
   'clearTeamStatistics': function() {
     TeamList.find({}, {}).forEach( function(doc) {
