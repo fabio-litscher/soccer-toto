@@ -227,8 +227,8 @@
                   <b>{{knockoutRound}}</b>
                 {{/if}}
               </td>
-              <td class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
-              <td class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
+              <td id="team1" class="mdl-data-table__cell--non-numeric">{{team1.name}}</td>
+              <td id="team2" class="mdl-data-table__cell--non-numeric">{{team2.name}}</td>
               <td class="mdl-data-table__cell--non-numeric">
                 <form id="addGameResult">
                   <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
@@ -251,6 +251,7 @@
 
           {{#each doneGames}}
             <tr>
+              <td></td>
               <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
               <td>{{time}}</td>
               <td class="mdl-data-table__cell--non-numeric">

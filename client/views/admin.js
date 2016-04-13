@@ -154,18 +154,21 @@ Template.adminResults.events({
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
 
     var gameId = this._id;
+    var team1 = $('#team1').html();
+    var team2 = $('#team2').html();
     var resultTeam1 = event.target.resultTeam1.value;
     var resultTeam2 = event.target.resultTeam2.value;
     var bet = 2;
     if(GameList.findOne({_id: gameId}).group == "noGroupGame") {
       var knockoutWinner = event.target.knockoutWinner.value;
-      console.log(knockoutWinner);
     }
 
     event.target.resultTeam1.value = "";
     event.target.resultTeam2.value = "";
 
-    Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet, knockoutWinner);
+    if(confirm("Bitte bestätigen Sie, dass folgendes Resultat stimmt:\n" + team1 + " : " + team2 + " - " + resultTeam1 + " : " + resultTeam2 )) {
+      Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet, knockoutWinner);
+    }
   },
   'click #clearGames': function(){
     Meteor.call('clearGames');
