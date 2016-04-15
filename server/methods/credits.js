@@ -36,18 +36,40 @@ Meteor.methods({
     } else {
       PotList.insert({
         name: potName,
-        credits: creditsToAdd
+        credits: creditsToAdd,
+        rest: 0
       });
     }
   },
-  'deletePot': function(potName) {
+  'splitWinnerPot': function(winnerTeam) {
+    // Pot auf User aufteilen
+    var totalBets = Meteor.users.find({ "profile.winner": { $exists: true } }, {}).count();
+    var countCorrectBets = Meteor.users.find({ "profile.winner":  winnerTeam}, {}).count();
+
+    if(countCorrectBets != 0) {
+      var creditsPerCorrectBet = totalBets * 5 / countCorrectBets;
+      creditsPerCorrectBet = Math.floor(creditsPerCorrectBet);
+      var roundingDifference = totalBets * 5 - countCorrectBets * creditsPerCorrectBet;
+    } else {
+      roundingDifference = totalBets * 5;
+    }
+
+    Meteor.users.find({ "profile.winner": winnerTeam }, {}).forEach( function(doc) {
+      var creditsBefore = Meteor.users.findOne({ _id: doc._id }, {}).profile.credits;
+      Meteor.users.update({_id: doc._id}, { $set: { "profile.credits": creditsBefore + 5 } });
+    });
 
     // Bei allen Usern Wette für Pot löschen
     Meteor.users.find({ "profile.winner": { $exists: true } }, {}).forEach( function(doc) {
       Meteor.users.update({_id: doc._id}, { $unset: { "profile.winner": "" } });
     });
 
+
     // Pot aus PotList löschen
-    PotList.remove({ name: potName }, {});
+    PotList.update({ name: "winner" }, { $set: { "credits": 0 } });
+    PotList.update({ name: "winner" }, { $set: { "rest": roundingDifference } });
+  },
+  'splitTopScorerPot': function(users) {
+
   }
 });

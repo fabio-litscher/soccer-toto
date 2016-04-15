@@ -17,7 +17,9 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 accounts-password
 ian:accounts-ui-bootstrap-3
-twbs:bootstrap
 standard-minifier-css
 standard-minifier-js
 frozeman:reactive-timer
+twbs:bootstrap
+materialize:materialize
+fastclick

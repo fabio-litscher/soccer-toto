@@ -253,11 +253,25 @@ Template.adminCredits.events({
     var userId = $(event.target).val();
     Session.set('selectedUser', userId);
   },
+  'change #teamList': function(event){
+    var teamId = $(event.target).val();
+    Session.set('selectedWinnerTeam', teamId);
+  },
+  'click #splitWinnerPot': function(){
+    var selectedWinnerTeam = Session.get('selectedWinnerTeam');
+    var winnerTeamName = TeamList.findOne({ _id: selectedWinnerTeam }).name;
+    if(confirm("Sind Sie sicher, dass sie folgende Mannschaft zum Sieger ernennen und den Pot entsprechend aufteilen möchten?\n" + winnerTeamName)) {
+      Meteor.call('splitWinnerPot', selectedWinnerTeam);
+    }
+  },
+  'click #splitTopScorerPot': function() {
+
+  },
   'click #delWinnerPot': function(){
-    Meteor.call('deletePot', "winner");
+    Meteor.call('removePot', "winner");
   },
   'click #delTopScorerPot': function(){
-    Meteor.call('deletePot', "topScorer");
+    Meteor.call('removePot', "topScorer");
   }
 });
 
@@ -266,16 +280,53 @@ Template.adminCredits.helpers({
   'user': function() {
     return Meteor.users.find({});
   },
+  'team': function() {
+    return TeamList.find({}, {sort: {name: 1} });
+  },
+  'userWithTopScorer': function() {
+    var exists = Meteor.users.find({ "profile.topScorer": { $exists: true } }, {});
+    if(exists) {
+      return Meteor.users.find({ "profile.topScorer": { $exists: true } }, {});
+    }
+  },
   'winnerPot': function() {
     var exists = PotList.findOne({ name: "winner" }, {});
     if(exists) {
       return PotList.findOne({ name: "winner"}, {}).credits;
+    } else {
+      return 0;
     }
   },
   'topScorerPot': function() {
     var exists = PotList.findOne({ name: "topScorer" }, {});
     if(exists) {
       return PotList.findOne({ name: "topScorer"}, {}).credits;
+    } else {
+      return 0;
+    }
+  },
+  'restOfWinnerPot': function() {
+    var exists = PotList.findOne({ name: "winner" }, {});
+    if(exists) {
+      if(PotList.findOne({ name: "winner" }, {}).rest > 0) {
+        return PotList.findOne({ name: "winner" }, {}).rest;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  },
+  'restOfTopScorerPot': function() {
+    var exists = PotList.findOne({ name: "topScorer" }, {});
+    if(exists) {
+      if(PotList.findOne({ name: "topScorer" }, {}).rest > 0) {
+        return PotList.findOne({ name: "topScorer" }, {}).rest;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
     }
   }
 });

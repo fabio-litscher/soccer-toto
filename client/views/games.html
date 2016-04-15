@@ -16,7 +16,7 @@
 
 
 <template name="openGames">
-  <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+  <table id="" class="standardTable responsive-table bordered highlight"><!--<table id="groupsTable" class="mdl-data-table mdl-js-data-table">-->
     <thead>
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Datum</th>
@@ -49,7 +49,7 @@
                     <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
                       <input class="resultInput mdl-textfield__input" id="resultTeam1" type="number" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="number" name="resultTeam2" placeholder="{{team2.shortname}}" required>
                     </div>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wette abschliessen</button>
+                    <button class="mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wetten</button>
                   {{/if}}
                 </form>
                 {{#each madeBet}}
@@ -76,7 +76,7 @@
 
 
 <template name="finishedGames">
-  <table id="groupsTable" class="mdl-data-table mdl-js-data-table">
+  <table id="" class="standardTable highlight bordered responsive-table">
     <thead>
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Datum</th>

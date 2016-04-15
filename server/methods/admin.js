@@ -148,5 +148,8 @@ Meteor.methods({
   },
   'removeGame': function(gameId) {
     GameList.remove({ _id: gameId });
+  },
+  'removePot': function(potName) {
+    PotList.remove({ name: potName });
   }
 });

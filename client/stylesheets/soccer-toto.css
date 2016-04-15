@@ -1,5 +1,24 @@
+.inline {
+  display: inline;
+}
+
+table.standardTable {
+  background-color: white;
+}
+
 .selected{
   background-color: #D1EDE7;
+}
+
+.usernameToTopScorer {
+  font-size: 18px;
+  float: right;
+  margin-right: 20px;
+}
+
+.topScorerUserList {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .mdl-cell {
@@ -33,11 +52,11 @@
   padding: 0px;
 }
 
-#groupsTable {
+.groupsTable {
   width: 100%;
   margin-bottom: 20px;
 }
-#groupsTable th, #groupsTable td {
+.groupsTable th, .groupsTable td {
   padding: 8px;
 }
 
@@ -46,4 +65,16 @@
 }
 #creditsToLoad {
   width: 130px;
+}
+
+#teamList {
+  display: inline;
+  width: auto;
+}
+
+/* Für mobile optimiert */
+@media (max-width:1000px) {
+  .mobileBlock {
+    display: block;
+  }
 }
