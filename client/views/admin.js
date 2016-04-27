@@ -243,15 +243,27 @@ Template.adminResults.helpers({
 Template.adminCredits.events({
   'submit form#sendCredits': function(){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
-    var selectedUser = Session.get('selectedUser');
-    var creditsToLoad = event.target.numberOfCredits.value;
-    event.target.numberOfCredits.value = "";
+    var selectedUser = Session.get('selectedUserSend');
+    var creditsToLoad = event.target.numberOfCreditsSend.value;
+    event.target.numberOfCreditsSend.value = "";
+    $('#usersListSend').prop('selectedIndex',0);
 
     Meteor.call('addCredits', selectedUser, creditsToLoad);
   },
-  'change #usersList': function(event){
+  'change #usersListSend': function(event){
     var userId = $(event.target).val();
-    Session.set('selectedUser', userId);
+    Session.set('selectedUserSend', userId);
+  },
+  'submit form#takeCredits': function(){
+    event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
+    var selectedUser = Session.get('selectedUserTake');
+    $('#usersListTake').prop('selectedIndex',0);
+
+    Meteor.call('deleteCredits', selectedUser);
+  },
+  'change #usersListTake': function(event){
+    var userId = $(event.target).val();
+    Session.set('selectedUserTake', userId);
   },
   'change #teamList': function(event){
     var teamId = $(event.target).val();
@@ -260,12 +272,24 @@ Template.adminCredits.events({
   'click #splitWinnerPot': function(){
     var selectedWinnerTeam = Session.get('selectedWinnerTeam');
     var winnerTeamName = TeamList.findOne({ _id: selectedWinnerTeam }).name;
+    $('#teamList').prop('selectedIndex',0);
     if(confirm("Sind Sie sicher, dass sie folgende Mannschaft zum Sieger ernennen und den Pot entsprechend aufteilen möchten?\n" + winnerTeamName)) {
       Meteor.call('splitWinnerPot', selectedWinnerTeam);
     }
   },
   'click #splitTopScorerPot': function() {
+    var correctUsers = new Array();
+    $("ul#topScorerUserList li").each(function( index ) {
+      var userId = $(this).attr('userId');
 
+      if( $('#filled-in-box_' + userId).prop('checked') ) {
+        correctUsers.push(userId);
+      }
+    });
+
+    if(confirm("Sind Sie sicher, dass sie alle richtigen Einträge ausgewählt haben?")) {
+      Meteor.call('splitTopScorerPot', correctUsers);
+    }
   },
   'click #delWinnerPot': function(){
     Meteor.call('removePot', "winner");

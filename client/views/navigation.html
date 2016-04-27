@@ -1,63 +1,42 @@
 <template name="navigation">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
-
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title">EM-Tippspiel</span>
-        {{> loginButtons}}
-      </div>
-      <!-- Tabs -->
-      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Home</a>
-        <a href="#fixed-tab-2" class="mdl-layout__tab">Gruppenübersicht</a>
-        <a href="#fixed-tab-3" class="mdl-layout__tab">Spielplan &amp; Wetten</a>
-        <a href="#fixed-tab-4" class="mdl-layout__tab {{noUserHidden}}">Mein Konto</a>
-        <a href="#fixed-tab-5" class="mdl-layout__tab {{noUserHidden}} {{noAdminHidden}}">Admin</a>
-      </div>
-    </header>
-    <!-- Navigation links zum einblenden -->
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">EM-Tippspiel</span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Home</a>
-        <a class="mdl-navigation__link" href="">Gruppenübersicht</a>
-        <a class="mdl-navigation__link" href="">Spielplan &amp; Wetten</a>
-        <a class="mdl-navigation__link {{noUserHidden}}" href="">Mein Konto</a>
-        <a class="mdl-navigation__link {{noUserHidden}} {{noAdminHidden}}" href="">Admin</a>
+  <header>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a class="brand-logo">EM-Tippspiel</a>
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi mdi-menu"></i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a class="{{ noUserShown }}" href="/login">Login / Registrierung</a></li>
+            <li><a href="{{ pathFor route='start' }}">Gruppenübersicht</a></li>
+            <li><a href="/games">Spielplan &amp; Wetten</a></li>
+            <li><a class="{{ noUserHidden }}" href="/myAccount">Mein Konto</a></li>
+            <li><a class="{{ noUserHidden }} {{ noAdminHidden }}" href="/admin">Admin</a></li>
+            <li><a class="{{ noUserHidden }}" href="/logout">Logout</a></li>
+          </ul>
+          <ul class="side-nav" id="slide-out">
+            <li><a class="{{ noUserShown }}" href="/login">Login / Registrierung</a></li>
+            <li><a href="{{ pathFor route='start' }}">Gruppenübersicht</a></li>
+            <li><a href="/games">Spielplan &amp; Wetten</a></li>
+            <li><a class="{{ noUserHidden }}" href="/myAccount">Mein Konto</a></li>
+            <li><a class="{{ noUserHidden }} {{ noAdminHidden }}" href="/admin">Admin</a></li>
+            <li><a class="{{ noUserHidden }}" href="/logout">logout</a></li>
+          </ul>
+        </div>
       </nav>
     </div>
-    <main class="mdl-layout__content">
-      <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-        <div class="page-content">
-          {{> home}}
-        </div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-        <div class="page-content">
-          {{> groups}}
-        </div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-        <div class="page-content">
-          {{> games}}
-        </div>
-      </section>
-      <section class="mdl-layout__tab-panel {{noUserHidden}}" id="fixed-tab-4">
-        <div class="page-content">
-          {{#if currentUser}}
-            {{> myAccount}}
-          {{else}}
-          <h3>Sie müssen eingeloggt sein um auf Ihr Konto zugreifen zu können!</h3>
-          {{/if}}
-        </div>
-      </section>
-      <section class="mdl-layout__tab-panel {{noUserHidden}} {{noAdminHidden}}" id="fixed-tab-5">
-        <div class="page-content">
-          {{> admin}}
-        </div>
-      </section>
+  </header>
 
-    </main>
-  </div>
+  <script type="text/javascript">
+    // initialization of the mobile navigation
+    $(document).ready(function(){
+      $(".button-collapse").sideNav();
+
+      $('.button-collapse').sideNav({
+      menuWidth: 220, // Default is 240
+      closeOnClick: true // Closes side-nav on <a> clicks
+    }
+  );
+    });
+  </script>
+
 </template>

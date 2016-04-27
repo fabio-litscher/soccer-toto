@@ -1,19 +1,21 @@
 <template name="myAccount">
-  <h1>Mein Konto</h1>
+  <div class="page-content">
+    <h1>Mein Konto</h1>
 
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Meine Konto-Informationen</h4>
-      {{> profileData}}
-    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Meine Konto-Informationen</h4>
+        {{> profileData}}
+      </div>
 
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      {{> userCredits}}
-    </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> userCredits}}
+      </div>
 
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Meine Tipps</h4>
-      {{>userBets}}
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Meine Tipps</h4>
+        {{>userBets}}
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@
 <template name="userCredits">
   <h4>Mein Guthaben: <b>{{userCredits}}.- CHF</b></h4>
   <p>
-    Zum Guthaben aufladen, bitte bei <b>John Steiger (stjo)</b> melden und abrechnen. <br>
+    Um Guthaben aufzuladen, bitte bei <b>John Steiger (stjo)</b> melden und abrechnen. <br>
     Er kann das Guthaben dann auf Ihr Konto laden.
   </p>
 </template>
@@ -77,4 +79,5 @@
       {{/if}}
     </div>
   </div>
+
 </template>

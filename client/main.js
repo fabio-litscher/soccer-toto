@@ -1,3 +1,21 @@
+// Routing mit iron:router
+Router.configure({
+  layoutTemplate: 'main'
+});
+Router.route('/', {
+  name: 'start',
+  template: 'groups'
+});
+Router.route('/logout', {
+  name: 'logout',
+  template: 'login'
+});
+Router.route('/login');
+Router.route('/games');
+Router.route('/myAccount');
+Router.route('/admin');
+
+
 // Collections von Server entgegennehmen
 Meteor.subscribe('theTeams');
 Meteor.subscribe('theGroups');

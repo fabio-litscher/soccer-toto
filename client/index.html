@@ -1,8 +1,11 @@
 <head>
   <title>EM-Tippspiel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9">
 </head>
 
-<body>
+<template name="main">
   {{> navigation}}
-</body>
+  <main class="mdl-layout__content">
+    {{> yield}}     <!-- Templates werden hier geladen -->
+  </main>
+</template>

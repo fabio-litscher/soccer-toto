@@ -2,12 +2,38 @@
   display: inline;
 }
 
+.mobileOnly {
+  display: none;
+}
+
 table.standardTable {
+  min-width: 100%;
   background-color: white;
 }
 
 .selected{
   background-color: #D1EDE7;
+}
+
+nav {
+  background-color: rgb(63,81,181);
+}
+nav ul a {
+  line-height: 64px;
+  font-size: 20px;
+}
+ul a:active, ul a:hover, ul a:focus {
+  color: white;
+  text-decoration: none;
+}
+
+.button-collapse:hover {
+  text-decoration: none;
+  color: white;
+  text-shadow: 1px 1px darkgrey;
+}
+.brand-logo:hover {
+  text-decoration: none;
 }
 
 .usernameToTopScorer {
@@ -16,7 +42,7 @@ table.standardTable {
   margin-right: 20px;
 }
 
-.topScorerUserList {
+.topScorerUserListDiv {
   max-height: 300px;
   overflow-y: auto;
 }
@@ -52,14 +78,6 @@ table.standardTable {
   padding: 0px;
 }
 
-.groupsTable {
-  width: 100%;
-  margin-bottom: 20px;
-}
-.groupsTable th, .groupsTable td {
-  padding: 8px;
-}
-
 #userForCredits {
   width: auto;
 }
@@ -72,9 +90,47 @@ table.standardTable {
   width: auto;
 }
 
+.mdi-delete {
+  font-size: 25px;
+}
+
 /* Für mobile optimiert */
 @media (max-width:1000px) {
+  table.standardTable tbody {
+    white-space: normal;
+  }
+  table.standardTable tbody tr {
+    width: 100%;
+  }
+  table.gamesTable tr {
+    padding: 0;
+    display: block;
+  }
+  table.gamesTable thead:first-child, table.gamesTable thead:first-child th:first-child {
+    display: none;
+  }
+
+  table.groupsTable th {
+    font-size: 12px;
+  }
+
+  .mobileOnly {
+    display: block;
+  }
+  hr.mobileOnly {
+    margin: 0;
+  }
   .mobileBlock {
     display: block;
+  }
+  .mdl-grid {
+    padding: 0;
+  }
+  .mdl-cell {
+    margin: 0;
+    margin-bottom: 20px;
+    min-width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }

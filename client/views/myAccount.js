@@ -63,7 +63,11 @@ Template.userBets.helpers({
 Template.userCredits.helpers({
   'userCredits':function() {
     if (Meteor.user()) {
-      return Meteor.user().profile.credits;
+      if(Meteor.user().profile.credits > 0) {
+        return Meteor.user().profile.credits;
+      } else {
+        return 0;
+      }
     }
   }
 });

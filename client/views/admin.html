@@ -1,25 +1,27 @@
 <template name="admin">
-  <h2>Administration</h2>
+  <div class="page-content">
+    <h2>Administration</h2>
 
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Guthaben</h4>
-      {{> adminCredits}}
-    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Guthaben</h4>
+        {{> adminCredits}}
+      </div>
 
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Spiele & Ergebnisse</h4>
-      {{> adminResults}}
-    </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Spiele & Ergebnisse</h4>
+        {{> adminResults}}
+      </div>
 
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Mannschaften</h4>
-      {{> adminTeams}}
-    </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Mannschaften</h4>
+        {{> adminTeams}}
+      </div>
 
-    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Gruppen</h4>
-      {{> adminGroups}}
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <h4>Gruppen</h4>
+        {{> adminGroups}}
+      </div>
     </div>
   </div>
 </template>
@@ -118,11 +120,14 @@
 <template name="adminCredits">
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <p>Hier können Sie Guthaben an einen Benutzer schicken.</p>
+      <p>
+        Hier können Sie Guthaben an einen Benutzer schicken. <br />
+        Die Eingabe von negativen Zahlen ist auch möglich und kann dazu verwendet werden, wenn zuviel Guthaben aufgeladen wurde.
+      </p>
 
       <form id="sendCredits">
         <div id="userForCredits" class="mdl-textfield mdl-js-textfield">
-          <select class="mdl-textfield__input" id="usersList" name="usersList" required>
+          <select class="mdl-textfield__input" id="usersListSend" name="usersList" required>
             <option selected disabled>Benutzer</option>
             {{#each user}}
               <option value="{{_id}}">{{profile.shortname}}</option>
@@ -130,9 +135,23 @@
           </select>
         </div>
         <div id="creditsToLoad" class="mdl-textfield mdl-js-textfield">
-          <input class="resultInput mdl-textfield__input" id="numberOfCredits" type="number" name="numberOfCredits" placeholder="Anzahl Credits" required>
+          <input class="resultInput mdl-textfield__input" id="numberOfCreditsSend" type="number" name="numberOfCreditsSend" placeholder="Anzahl Credits" required>
         </div>
         <button id="sendCredits" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Guthaben schicken</button>
+      </form>
+      <p>
+        Wenn sie einem Benutzer das Guthaben ausgezahlt haben, können sie es hier löschen, also auf 0 setzen.
+      </p>
+      <form id="takeCredits">
+        <div id="userForCredits" class="mdl-textfield mdl-js-textfield">
+          <select class="mdl-textfield__input" id="usersListTake" name="usersList" required>
+            <option selected disabled>Benutzer</option>
+            {{#each user}}
+              <option value="{{_id}}">{{profile.shortname}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <button id="sendCredits" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Guthaben löschen</button>
       </form>
     </div>
 
@@ -155,21 +174,19 @@
         <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
           <h5>Torschützenkönig-Pot: {{topScorerPot}}.- CHF</h5>
 
-          <form id="topScorerList">
-            <div class="topScorerUserList">
-              <ul class="collection">
-                {{#each userWithTopScorer}}
-                  <li class="collection-item">
-                    <div><input type="checkbox" class="filled-in" id="filled-in-box_{{_id}}" /><label for="filled-in-box_{{_id}}">{{profile.topScorer}}</label><p class="usernameToTopScorer">{{profile.shortname}}</p></div>
-                  </li>
-                {{/each}}
-              </ul>
-            </div>
-            <button id="delTopScorerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Torschützenkönig-Pot aufteilen</button>
-            <br /><br />
-            <h6 class="inline"><b>Rest: {{restOfTopScorerPot}}.- CHF</b></h6>
-            <button id="delWinnerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Torschützenkönig-Pot löschen</button>
-          </form>
+          <div class="topScorerUserListDiv">
+            <ul class="collection" id="topScorerUserList">
+              {{#each userWithTopScorer}}
+                <li class="collection-item" userId="{{_id}}">
+                  <div><input type="checkbox" class="filled-in" id="filled-in-box_{{_id}}" /><label for="filled-in-box_{{_id}}">{{profile.topScorer}}</label><p class="usernameToTopScorer">{{profile.shortname}}</p></div>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          <button id="splitTopScorerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Torschützenkönig-Pot aufteilen</button>
+          <br /><br />
+          <h6 class="inline"><b>Rest: {{restOfTopScorerPot}}.- CHF</b></h6>
+          <button id="delTopScorerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Torschützenkönig-Pot löschen</button>
         </div>
       </div>
     </div>
@@ -247,7 +264,7 @@
         <tbody>
           {{#each openGames}}
             <tr>
-              <td class="mdl-data-table__cell--non-numeric"><a class="delGame" gameId="{{_id}}" href=""><i class="material-icons">delete</i></a></td>
+              <td class="mdl-data-table__cell--non-numeric"><a class="delGame" gameId="{{_id}}" href=""><i class="mdi mdi-delete"></i></a></td>
               <td class="mdl-data-table__cell--non-numeric">{{date}}</td>
               <td>{{time}}</td>
               <td class="mdl-data-table__cell--non-numeric">
