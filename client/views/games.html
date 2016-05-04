@@ -1,139 +1,178 @@
 <template name="games">
   <div class="page-content">
-
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Offene Spiele</h4>
-        {{> openGames}}
-      </div>
-
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Abgeschlossene Spiele</h4>
-        {{> finishedGames}}
-      </div>
-    </div>
-
+    {{> openGames}}
+    {{> finishedGames}}
   </div>
 </template>
 
 
 <template name="openGames">
-  <table id="" class="standardTable gamesTable responsive-table bordered highlight">
-    <thead>
-      <tr>
-        <th>Datum</th>
-        <th>Uhrzeit</th>
-        <th>Gruppe / Runde</th>
-        <th>Mannschaft 1</th>
-        <th>Mannschaft 2</th>
-        <th>Auf Ergebnis wetten</th>
-      </tr>
-    </thead>
-    {{#each openGames}}
-      <thead class="mobileOnly">
-        <tr>
-          <th>Datum</th>
-          <th>Uhrzeit</th>
-          <th>Gruppe / Runde</th>
-          <th>Mannschaft 1</th>
-          <th>Mannschaft 2</th>
-          <th>Auf Ergebnis wetten</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{date}}</td>
-          <td>{{time}}</td>
-          <td>
-            {{#if groupName}}
-              {{groupName}}
-            {{else}}
-              <b>{{knockoutRound}}</b>
-            {{/if}}
-          </td>
-          <td>{{team1.name}}</td>
-          <td>{{team2.name}}</td>
-          <td>
-            {{#if currentUser}}
-              {{#if datetimeOk}}
-                <form id="addBetResult">
-                  {{#if canBet}}
-                    <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
-                      <input class="resultInput mdl-textfield__input" id="resultTeam1" type="tel" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="tel" name="resultTeam2" placeholder="{{team2.shortname}}" required>
-                    </div>
-                    <button class="mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wetten</button>
-                  {{/if}}
-                </form>
-                {{#each madeBet}}
-                  {{result1}}:{{result2}} |
-                {{/each}}
-              {{else}}
-                {{#if madeBet.count}}
-                  {{#each madeBet}}
-                    {{result1}}:{{result2}} |
-                  {{/each}}
-                  <br />
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Offene Spiele</h4>
+      <table id="" class="standardTable gamesTable responsive-table bordered highlight">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Uhrzeit</th>
+            <th>Gruppe / Runde</th>
+            <th>Mannschaft 1</th>
+            <th>Mannschaft 2</th>
+            <th>Auf Ergebnis wetten</th>
+          </tr>
+        </thead>
+        {{#each openGames}}
+          <thead class="mobileOnly">
+            <tr>
+              <th>Datum</th>
+              <th>Uhrzeit</th>
+              <th>Gruppe / Runde</th>
+              <th>Mannschaft 1</th>
+              <th>Mannschaft 2</th>
+              <th>Auf Ergebnis wetten</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{date}}</td>
+              <td>{{time}}</td>
+              <td>
+                {{#if groupName}}
+                  {{groupName}}
+                {{else}}
+                  <b>{{knockoutRound}}</b>
                 {{/if}}
-                <span>Wetten abgeben nicht mehr möglich!</span>
-              {{/if}}
-            {{else}}
-              <span>Bitte einloggen um Wette abzugeben!</span>
-            {{/if}}
-          </td>
-        </tr>
-      </tbody>
-      <hr class="mobileOnly" />
-    {{/each}}
-  </table>
+              </td>
+              <td>{{team1.name}}</td>
+              <td>{{team2.name}}</td>
+              <td>
+                {{#if currentUser}}
+                  {{#if datetimeOk}}
+                    <form id="addBetResult">
+                      {{#if canBet}}
+                        <div id="resultInputDiv" class="mdl-textfield mdl-js-textfield">
+                          <input class="resultInput mdl-textfield__input" id="resultTeam1" type="tel" name="resultTeam1" placeholder="{{team1.shortname}}" required>:<input class="resultInput mdl-textfield__input" id="resultTeam2" type="tel" name="resultTeam2" placeholder="{{team2.shortname}}" required>
+                        </div>
+                        <button class="mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Wetten</button>
+                      {{/if}}
+                    </form>
+                    {{#each madeBet}}
+                      {{result1}}:{{result2}} |
+                    {{/each}}
+                  {{else}}
+                    {{#if madeBet.count}}
+                      {{#each madeBet}}
+                        {{result1}}:{{result2}} |
+                      {{/each}}
+                      <br />
+                    {{/if}}
+                    <span>Wetten abgeben nicht mehr möglich!</span>
+                  {{/if}}
+                {{else}}
+                  <span>Bitte einloggen um Wette abzugeben!</span>
+                {{/if}}
+              </td>
+            </tr>
+          </tbody>
+          <hr class="mobileOnly" />
+        {{/each}}
+      </table>
+    </div>
+  </div>
+  <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <ul class="collection">
+              <li class="collection-item avatar">
+                <img src="images/yuna.jpg" alt="" class="circle">
+                <span class="title">Title</span>
+                <p>First Line <br> Second Line </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle">folder</i>
+                <span class="title">Title</span>
+                <p>First Line <br> Second Line </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle green">assessment</i>
+                <span class="title">Title</span>
+                <p>First Line <br> Second Line </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+              </li>
+              <li class="collection-item avatar">
+                <i class="material-icons circle red">play_arrow</i>
+                <span class="title">Title</span>
+                <p>First Line <br> Second Line </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+              </li>
+            </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
 </template>
 
 
+
+
 <template name="finishedGames">
-  <table id="" class="standardTable gamesTable highlight bordered responsive-table">
-    <thead>
-      <tr>
-        <th>Datum</th>
-        <th>Uhrzeit</th>
-        <th>Gruppe / Runde</th>
-        <th>Mannschaft 1</th>
-        <th>Mannschaft 2</th>
-        <th>Ergebnis / Sieger</th>
-      </tr>
-    </thead>
-    {{#each closedGames}}
-      <thead class="mobileOnly">
-        <tr>
-          <th>Datum</th>
-          <th>Uhrzeit</th>
-          <th>Gruppe / Runde</th>
-          <th>Mannschaft 1</th>
-          <th>Mannschaft 2</th>
-          <th>Auf Ergebnis wetten</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{date}}</td>
-          <td>{{time}}</td>
-          <td>
-            {{#if groupName}}
-              {{groupName}}
-            {{else}}
-              <b>{{knockoutRound}}</b>
-            {{/if}}
-          </td>
-          <td>{{team1.name}}</td>
-          <td>{{team2.name}}</td>
-          <td>
-            {{result1}} : {{result2}}
-            {{#unless groupName}}
-               - <b>{{winnerTeam.name}}</b>
-            {{/unless}}
-          </td>
-        </tr>
-      </tbody>
-      <hr class="mobileOnly" />
-    {{/each}}
-  </table>
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h4>Abgeschlossene Spiele</h4>
+      <table id="" class="standardTable gamesTable highlight bordered responsive-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Uhrzeit</th>
+            <th>Gruppe / Runde</th>
+            <th>Mannschaft 1</th>
+            <th>Mannschaft 2</th>
+            <th>Ergebnis / Sieger</th>
+          </tr>
+        </thead>
+        {{#each closedGames}}
+          <thead class="mobileOnly">
+            <tr>
+              <th>Datum</th>
+              <th>Uhrzeit</th>
+              <th>Gruppe / Runde</th>
+              <th>Mannschaft 1</th>
+              <th>Mannschaft 2</th>
+              <th>Auf Ergebnis wetten</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{date}}</td>
+              <td>{{time}}</td>
+              <td>
+                {{#if groupName}}
+                  {{groupName}}
+                {{else}}
+                  <b>{{knockoutRound}}</b>
+                {{/if}}
+              </td>
+              <td>{{team1.name}}</td>
+              <td>{{team2.name}}</td>
+              <td>
+                {{result1}} : {{result2}}
+                {{#unless groupName}}
+                   - <b>{{winnerTeam.name}}</b>
+                {{/unless}}
+              </td>
+            </tr>
+          </tbody>
+          <hr class="mobileOnly" />
+        {{/each}}
+      </table>
+    </div>
+  </div>
 
 </template>

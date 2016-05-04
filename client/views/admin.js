@@ -112,6 +112,31 @@ Template.adminGroups.helpers({
 });
 
 
+// adminResults when template rendered
+Template.adminResults.onRendered(function() {
+  $('#gameDate').pickadate({
+    selectMonths: true,
+    selectYears: 10,
+    labelMonthNext: 'Nächster Monat',
+    labelMonthPrev: 'Vorheriger Monat',
+    labelMonthSelect: 'Auswahl Monat',
+    labelYearSelect: 'Auswahl Jahr',
+    monthsFull: [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+    monthsShort: [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
+    weekdaysFull: [ 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag' ],
+    weekdaysShort: [ 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So' ],
+    weekdaysLetter: [ 'M', 'D', 'M', 'D', 'F', 'S', 'S' ],
+    today: 'Heute',
+    clear: 'Clear',
+    close: 'Ok',
+    format: 'dd.mm.yyyy'
+  });
+
+  $('#gameTime').timeEntry({
+    show24Hours: true
+  });
+});
+
 // adminResults template events
 Template.adminResults.events({
   'change #gameGroup': function(event){
@@ -132,9 +157,9 @@ Template.adminResults.events({
     }
 
     // Date object erstellen
-    var year = gameDate.substring(0,4);
-    var month = gameDate.substring(5,7)-1;
-    var day = gameDate.substring(8,10);
+    var day = gameDate.substring(0,2);
+    var month = gameDate.substring(3,5)-1;
+    var year = gameDate.substring(6,10);
     var hour = gameTime.substring(0,2);
     var minute = gameTime.substring(3,5);
     var gameDateTime = new Date(year, month, day, hour, minute);
@@ -163,12 +188,12 @@ Template.adminResults.events({
       var knockoutWinner = event.target.knockoutWinner.value;
     }
 
-    event.target.resultTeam1.value = "";
-    event.target.resultTeam2.value = "";
-
-    if(confirm("Bitte bestätigen Sie, dass folgendes Resultat stimmt:\n" + team1 + " : " + team2 + " - " + resultTeam1 + " : " + resultTeam2 )) {
+    if(confirm("Sind Sie sicher, dass Sie das Resultat korrekt eingegeben haben?")) {
       Meteor.call('insertGameResult', gameId, resultTeam1, resultTeam2, bet, knockoutWinner);
     }
+
+    event.target.resultTeam1.value = "";
+    event.target.resultTeam2.value = "";
   },
   'click #clearGames': function(){
     Meteor.call('clearGames');

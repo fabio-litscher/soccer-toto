@@ -16,10 +16,12 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 accounts-password
-ian:accounts-ui-bootstrap-3
 standard-minifier-css
 standard-minifier-js
 frozeman:reactive-timer
+fastclick
+iron:router
+accounts-ui
 twbs:bootstrap
 materialize:materialize
-fastclick
+dapearce:material-icons

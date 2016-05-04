@@ -1,14 +1,14 @@
 <template name="admin">
   <div class="page-content">
-    <h2>Administration</h2>
+    <h3>Administration</h3>
 
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <h4>Guthaben</h4>
         {{> adminCredits}}
       </div>
 
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <h4>Spiele & Ergebnisse</h4>
         {{> adminResults}}
       </div>
@@ -201,11 +201,11 @@
       <form id="addGame">
         <div id="gameDateDiv" class="mdl-textfield mdl-js-textfield">
           <label for="gameDate">Datum:</label>
-          <input class="mdl-textfield__input" type="date" name="gameDate" id="gameDate" required>
+          <input class="mdl-textfield__input" type="text" name="gameDate" id="gameDate" required>
         </div>
         <div id="gameTimeDiv" class="mdl-textfield mdl-js-textfield">
           <label for="gameTime">Spielbeginn:</label>
-          <input class="mdl-textfield__input" type="time" name="gameTime" id="gameTime" required>
+          <input class="mdl-textfield__input" type="text" name="gameTime" id="gameTime" required>
         </div>
         <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
           <select class="mdl-textfield__input" id="gameGroup" name="gameGroup" required>

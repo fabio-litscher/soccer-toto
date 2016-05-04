@@ -2,8 +2,17 @@
   display: inline;
 }
 
+.mdl-layout__content {
+  width: 100%;
+}
+
 .mobileOnly {
   display: none;
+}
+
+.loginButton {
+  margin-top: 18px;
+  margin-left: 10px;
 }
 
 table.standardTable {

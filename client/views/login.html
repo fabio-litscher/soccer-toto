@@ -1,6 +1,50 @@
-<template name="login">
-  {{> loginButtons}}
+<template name="loginRegister">
   <div class="page-content">
-    <h1>Login / Registrierung</h1>
+    <div class="row">
+      {{> login}}
+    </div>
+    <div class="row">
+      {{> register}}
+    </div>
   </div>
+</template>
+
+
+<template name="login">
+  <h2>Login</h2>
+  <form class="login">
+    <div class="input-field col s12 m6 l2">
+      <input id="loginEmail" name="loginEmail" type="email" class="validate">
+      <label for="loginEmail">Email</label>
+    </div>
+    <div class="input-field col s12 m6 l2">
+      <input type="password" id="loginPassword" name="loginPassword" class="validate">
+      <label for="loginPassword">Passwort</label>
+    </div>
+    <button class="btn loginButton waves-effect waves-light" type="submit">Login
+      <i class="mdi mdi-login"></i>
+    </button>
+  </form>
+</template>
+
+<template name="register">
+  <h2>Registrierung</h2>
+
+  <form class="register">
+    <div class="input-field col s12 m6 l2">
+      <input id="registerEmail" name="registerEmail" type="email" class="validate">
+      <label for="registerEmail">Email</label>
+    </div>
+    <div class="input-field col s12 m6 l2">
+      <input type="text" id="registerShortname" name="registerShortname" class="validate">
+      <label for="registerShortname">Kurzzeichen</label>
+    </div>
+    <div class="input-field col s12 m6 l2">
+      <input type="password" id="registerPassword" name="registerPassword" class="validate">
+      <label for="registerPassword">Passwort</label>
+    </div>
+    <button class="btn loginButton waves-effect waves-light" type="submit">Registrieren
+      <i class="mdi mdi-send"></i>
+    </button>
+  </form>
 </template>

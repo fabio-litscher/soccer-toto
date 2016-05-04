@@ -132,10 +132,6 @@ Meteor.methods({
     // Rundungsdifferenz in Sieger-Pott übertragen
     var roundingDifference = totalGamePot - countUsers * creditsPerBet;
 
-    console.log("total gamepot: "+totalGamePot);
-    console.log("pro spieler: "+creditsPerBet);
-    console.log("Differenz: "+roundingDifference);
-
     Meteor.call('creditsToPot', "winner", roundingDifference);
   },
   'clearTeamStatistics': function() {

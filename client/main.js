@@ -8,9 +8,9 @@ Router.route('/', {
 });
 Router.route('/logout', {
   name: 'logout',
-  template: 'login'
+  template: 'login_register'
 });
-Router.route('/login');
+Router.route('/loginRegister');
 Router.route('/games');
 Router.route('/myAccount');
 Router.route('/admin');
@@ -23,7 +23,7 @@ Meteor.subscribe('theGames');
 Meteor.subscribe('theBet');
 Meteor.subscribe('thePots');
 Meteor.subscribe("users");
-
+/*
 Accounts.ui.config({
     requestPermissions: {},
     extraSignupFields: [{
@@ -41,6 +41,6 @@ Accounts.ui.config({
         }
     }]
 });
-
+*/
 // Sprache auf Deutsch setzen
-accountsUIBootstrap3.setLanguage('de');
+//accountsUIBootstrap3.setLanguage('de');

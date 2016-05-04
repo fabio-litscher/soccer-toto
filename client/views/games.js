@@ -1,3 +1,7 @@
+Template.openGames.onRendered(function() {
+  $('.modal-trigger').leanModal();
+});
+
 // openGames template events
 Template.openGames.events({
   'submit form#addBetResult': function(){
