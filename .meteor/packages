@@ -25,3 +25,4 @@ accounts-ui
 twbs:bootstrap
 materialize:materialize
 dapearce:material-icons
+momentjs:moment

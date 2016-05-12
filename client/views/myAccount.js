@@ -1,6 +1,6 @@
 // groupOverview template events
 Template.userBets.events({
-  'submit form#addWinner': function(){
+  'submit form#addWinner': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var winnerTeam = Session.get('winnerTeam');
     var creditsNeeded = 5;
@@ -15,7 +15,7 @@ Template.userBets.events({
       }
     });
   },
-  'submit form#addTopScorer': function(){
+  'submit form#addTopScorer': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var topScorer = event.target.topScorer.value;
     var creditsNeeded = 5;
@@ -55,6 +55,19 @@ Template.userBets.helpers({
     // erst beim re-render ist er dann geladen und dann klappt es
     if (Meteor.user()) {
       return Meteor.user().profile.topScorer;
+    }
+  },
+  'beforeFirstGame': function() {
+    // Timer erstellen, so wird die reaktive Funktion (dieser Helper) alle X-Sekunden ausgeführt
+    var myTimer = new ReactiveTimer(30);
+    myTimer.tick();
+
+    var firstGame = GameList.findOne({}, {sort: {date: 1, time: 1} }).datetime;
+    var now = new Date();
+    if(now > firstGame) {
+      return false;
+    } else {
+      return true;
     }
   }
 });

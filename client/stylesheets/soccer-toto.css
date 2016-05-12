@@ -1,6 +1,9 @@
 .inline {
   display: inline;
 }
+.inline-block {
+  display: inline-block;
+}
 
 .mdl-layout__content {
   width: 100%;
@@ -13,6 +16,21 @@
 .loginButton {
   margin-top: 18px;
   margin-left: 10px;
+}
+
+.myBetsText {
+  font-size: 15px;
+}
+.delBetIcon {
+  position: relative;
+  font-size: 26px;
+  bottom: -4px;
+}
+.editIcon {
+  position: relative;
+  font-size: 24px;
+  left: 5px;
+  bottom: -5px;
 }
 
 table.standardTable {
@@ -99,9 +117,37 @@ ul a:active, ul a:hover, ul a:focus {
   width: auto;
 }
 
+#adminUserlist {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .mdi-delete {
   font-size: 25px;
 }
+
+.linkToChat {
+  color: inherit;
+}
+.linkToChat:hover {
+  text-decoration: none;
+}
+input#messageText {
+  width: 84%;
+}
+#sendMessage {
+  margin-bottom: 15px;
+}
+div#messages {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+.chatDatetime {
+  font-size: 13px;
+  font-style: italic;
+  color: grey;
+}
+
 
 /* Für mobile optimiert */
 @media (max-width:1000px) {
@@ -123,6 +169,9 @@ ul a:active, ul a:hover, ul a:focus {
     font-size: 12px;
   }
 
+  .mobileHide {
+    display: none;
+  }
   .mobileOnly {
     display: block;
   }

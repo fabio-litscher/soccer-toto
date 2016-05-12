@@ -9,12 +9,14 @@ Meteor.publish('theGames', function(){
   return GameList.find();
 });
 Meteor.publish('theBet', function(){
-  var currentUserId = this.userId;
-  return BetList.find({user: currentUserId});
+  return BetList.find();
 });
 Meteor.publish('thePots', function(){
   return PotList.find();
 });
 Meteor.publish("users", function(){
   return Meteor.users.find({});
+})
+Meteor.publish("messages", function(){
+  return MessageList.find();
 })

@@ -1,22 +1,31 @@
 <template name="myAccount">
   <div class="page-content">
-    <h3>Mein Konto</h3>
-
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Meine Konto-Informationen</h4>
-        {{> profileData}}
+    {{#if currentUser}}
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> liveticker}}
+        </div>
       </div>
 
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        {{> userCredits}}
-      </div>
+      <div class="mdl-grid">
+        <h3>Mein Konto</h3>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Meine Konto-Informationen</h4>
+          {{> profileData}}
+        </div>
 
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Meine Tipps</h4>
-        {{>userBets}}
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          {{> userCredits}}
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Meine Tipps</h4>
+          {{>userBets}}
+        </div>
       </div>
-    </div>
+    {{else}}
+      <h3>Sie müssen eingeloggt sein um auf Ihr Konto zugreifen zu können!</h3>
+    {{/if}}
   </div>
 </template>
 
@@ -46,17 +55,21 @@
       {{#if winnerTeam}}
         <p>Sie haben bereits auf einen Sieger gesetzt: <b>{{winnerTeam.name}}</b></p>
       {{else}}
-        <form id="addWinner">
-          <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
-            <select class="mdl-textfield__input" id="winnerTeam" name="winnerTeam" required>
-              <option selected disabled>Sieger-Team</option>
-              {{#each team}}
-                <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-          <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Sieger setzen</button>
-        </form>
+        {{#if beforeFirstGame}}
+          <form id="addWinner">
+            <div id="gameGroupDiv" class="mdl-textfield mdl-js-textfield">
+              <select class="mdl-textfield__input" id="winnerTeam" name="winnerTeam" required>
+                <option selected disabled>Sieger-Team</option>
+                {{#each team}}
+                  <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Sieger setzen</button>
+          </form>
+        {{else}}
+          <p><b>Sie können nicht mehr auf den Sieger tippen, da das Turnier bereits begonnen hat!</b></p>
+        {{/if}}
       {{/if}}
     </div>
 
@@ -69,13 +82,17 @@
       {{#if topScorer}}
         <p>Sie haben bereits auf einen Torschützenkönig gesetzt: <b>{{topScorer}}</b></p>
       {{else}}
-        <form id="addTopScorer">
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="topScorer" name="topScorer" required>
-            <label class="mdl-textfield__label" for="topScorer">Torschützenkönig</label>
-          </div>
-          <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Torschützenkönig setzen</button>
-        </form>
+        {{#if beforeFirstGame}}
+          <form id="addTopScorer">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="topScorer" name="topScorer" required>
+              <label class="mdl-textfield__label" for="topScorer">Torschützenkönig</label>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Auf Torschützenkönig setzen</button>
+          </form>
+        {{else}}
+          <p><b>Sie können nicht mehr auf den Torschützenkönig tippen, da das Turnier bereits begonnen hat!</b></p>
+        {{/if}}
       {{/if}}
     </div>
   </div>

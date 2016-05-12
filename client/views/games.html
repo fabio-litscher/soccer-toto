@@ -1,5 +1,13 @@
 <template name="games">
   <div class="page-content">
+    {{#if currentUser}}
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> liveticker}}
+        </div>
+      </div>
+    {{/if}}
+
     {{> openGames}}
     {{> finishedGames}}
   </div>
@@ -19,6 +27,7 @@
             <th>Mannschaft 1</th>
             <th>Mannschaft 2</th>
             <th>Auf Ergebnis wetten</th>
+            <th>Tipps</th>
           </tr>
         </thead>
         {{#each openGames}}
@@ -30,6 +39,7 @@
               <th>Mannschaft 1</th>
               <th>Mannschaft 2</th>
               <th>Auf Ergebnis wetten</th>
+              <th>Tipps</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +67,7 @@
                       {{/if}}
                     </form>
                     {{#each madeBet}}
-                      {{result1}}:{{result2}} |
+                      <span class="mobileBlock myBetsText">{{result1}}:{{result2}} <a href="" class="delBet" betId="{{_id}}"><i class="delBetIcon mdi mdi-close-circle-outline"></i></a><span class="mobileHide"> | </span></span>
                     {{/each}}
                   {{else}}
                     {{#if madeBet.count}}
@@ -72,6 +82,20 @@
                   <span>Bitte einloggen um Wette abzugeben!</span>
                 {{/if}}
               </td>
+              <!-- alle vorhandenen tipps für spiel anzeigen -->
+              {{#if currentUser}}
+                {{#if hasBetsForGame}}
+                  <td>
+                    <button id="showBets_{{_id}}" gameId="{{_id}}" class="showAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Alle Tipps anzeigen</button>
+                    <button id="hideBets_{{_id}}" gameId="{{_id}}" class="hidden hideAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Ausblenden</button>
+                    <span id="bets_{{_id}}" class="hidden">{{gameBets}}</span>
+                  </td>
+                {{else}}
+                  <td><br /></td>
+                {{/if}}
+              {{else}}
+                <td><br /></td>
+              {{/if}}
             </tr>
           </tbody>
           <hr class="mobileOnly" />
@@ -79,46 +103,7 @@
       </table>
     </div>
   </div>
-  <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal bottom-sheet">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <ul class="collection">
-              <li class="collection-item avatar">
-                <img src="images/yuna.jpg" alt="" class="circle">
-                <span class="title">Title</span>
-                <p>First Line <br> Second Line </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle">folder</i>
-                <span class="title">Title</span>
-                <p>First Line <br> Second Line </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle green">assessment</i>
-                <span class="title">Title</span>
-                <p>First Line <br> Second Line </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-              </li>
-              <li class="collection-item avatar">
-                <i class="material-icons circle red">play_arrow</i>
-                <span class="title">Title</span>
-                <p>First Line <br> Second Line </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-              </li>
-            </ul>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
 </template>
-
 
 
 

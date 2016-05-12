@@ -1,0 +1,45 @@
+<template name="home">
+  <div class="page-content">
+    <h2>Home</h2>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> pots}}
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> chat}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="pots">
+  <h3>Pots</h3>
+  asd
+</template>
+
+<template name="chat">
+  <h3>Live-Chat</h3>
+  {{#if currentUser}}
+    <form id="sendMessage">
+      <div class="input-field inline">
+        <input type="text" autocomplete="off" id="messageText" name="messageText" required>
+        <label for="messageText">Nachricht</label>
+      </div>
+      <button class="btn inline waves-effect waves-light" type="submit">Senden
+        <i class="mdi mdi-send"></i>
+      </button>
+    </form>
+    <div id="messages">
+      {{#each messages}}
+        <span>
+          <span class="chatDatetime">{{date}} {{time}}</span>
+          <b>{{username}}:</b>
+          {{messageText}}
+          <br />
+        </span>
+      {{/each}}
+    </div>
+  {{else}}
+    <h5>Sie müssen eingeloggt sein um den Live-Chat verwenden zu können!</h5>
+  {{/if}}
+</template>

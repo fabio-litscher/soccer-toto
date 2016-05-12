@@ -1,5 +1,13 @@
 <template name="groups">
   <div class="page-content">
+    {{#if currentUser}}
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> liveticker}}
+        </div>
+      </div>
+    {{/if}}
+
     {{#if knockoutCount}}
       <h3>Finalrunden</h3>
       {{> knockoutOverview}}

@@ -1,0 +1,12 @@
+<template name="liveticker">
+  <b>Letzte Chat-Nachrichten:</b>
+  <a class="linkToChat" href="/">
+    {{#each lastMessages}}
+      <div>
+        <span class="chatDatetime">{{date}} {{time}}</span>
+        <b>{{username}}:</b>
+        {{messageText}}
+      </div>
+    {{/each}}
+  </a>
+</template>

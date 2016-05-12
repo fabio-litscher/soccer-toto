@@ -1,28 +1,38 @@
 <template name="admin">
   <div class="page-content">
-    <h3>Administration</h3>
+    {{#if authorizedAdmin}}
+      <h3>Administration</h3>
 
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Guthaben</h4>
-        {{> adminCredits}}
-      </div>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Guthaben</h4>
+          {{> adminCredits}}
+        </div>
 
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Spiele & Ergebnisse</h4>
-        {{> adminResults}}
-      </div>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Benutzerverwaltung</h4>
+          {{> useradministration}}
+        </div>
 
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Mannschaften</h4>
-        {{> adminTeams}}
-      </div>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Spiele & Ergebnisse</h4>
+          {{> adminResults}}
+        </div>
 
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Gruppen</h4>
-        {{> adminGroups}}
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Mannschaften</h4>
+          {{> adminTeams}}
+        </div>
+
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Gruppen</h4>
+          {{> adminGroups}}
+        </div>
       </div>
-    </div>
+    {{else}}
+      <h3>Zugriff verweigert!</h3>
+      <h5>Falls Sie Admin sind, vergewissern Sie sich, dass sie eingeloggt sind.</h5>
+    {{/if}}
   </div>
 </template>
 
@@ -72,6 +82,55 @@
   </ul>
 </template>
 
+<template name="useradministration">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+      <div id="adminUserlist" class="collection">
+        {{#each users }}
+          <li class="user {{selectedUserClass}} mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {{profile.shortname}} <p class="secondary-content">{{emails.[0].address}}</p>
+            </span>
+          </li>
+        {{/each}}
+      </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+      <h5>Benutzerinformationen</h5>
+      <table>
+        <tr>
+          <th>Kurzzeichen:</th>
+          <td>{{selectedUser.profile.shortname}}</td>
+        </tr>
+        <tr>
+          <th>Email:</th>
+          <td id="usersEmail">
+            <p id="oldEmail" class="inline">{{selectedUser.emails.[0].address}}</p>
+            <!--<a userId="{{selectedUser._id}}" id="editEmailButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>-->
+          </td>
+          <td id="newEmailTd" class="hidden">
+            <div class="input-field inline-block">
+              <input id="newEmailAddress" type="email" class="validate">
+              <label for="newEmailAddress">Neue Email</label>
+            </div>
+            <a userId="{{selectedUser._id}}" id="saveNewEmailButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
+          </td>
+        </tr>
+        <tr>
+          <th>Guthaben:</th>
+          <td>{{selectedUser.profile.credits}}</td>
+        </tr>
+        <tr>
+          <th>Passwort:</th>
+          <td><button userId="{{selectedUser._id}}" id="resetPassword" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Zurücksetzen</button></td>
+        </tr>
+      </table>
+    </div>
+    <div class="mdl-cell mdl-cell--5-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>Alle Tipps</h5>
+    </div>
+  </div>
+</template>
 
 <template name="adminGroups">
   <form>

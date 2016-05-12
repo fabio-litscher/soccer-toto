@@ -1,5 +1,14 @@
 // Methods, called from the client side
 Meteor.methods({
+  'resetUsersPassword': function(userId, newPassword) {
+    Accounts.setPassword(userId, newPassword);
+  },
+  'changeUsersEmail': function(userId, oldEmail, newEmail) {
+    console.log(oldEmail);
+    console.log(newEmail);
+    Accounts.addEmail(userId, newEmail);
+    Accounts.removeEmail(userId, oldEmail);
+  },
   'insertNewTeam': function(teamName, teamShortname) {
     TeamList.insert({
       name: teamName,

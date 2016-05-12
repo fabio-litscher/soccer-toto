@@ -12,7 +12,7 @@ Template.register.events({
             shortname: shortname
           }
       });
-      Router.go('start');
+      Router.go('home');
   }
 });
 
@@ -22,6 +22,6 @@ Template.login.events({
     var email = $('[name=loginEmail]').val();
     var password = $('[name=loginPassword]').val();
     Meteor.loginWithPassword(email, password);
-    Router.go('start');
+    Router.go('home');
   }
 });

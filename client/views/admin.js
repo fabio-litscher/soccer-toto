@@ -1,6 +1,72 @@
+Template.useradministration.events({
+  'click .user': function(event){
+    //var userId = event.target.getAttribute("userId");
+    var userId = this._id;
+    Session.set('selectedUser', userId);
+  },
+  'click #resetPassword': function(event) {
+    var userId = event.target.getAttribute('userId');
+    var username = Meteor.users.findOne(userId).profile.shortname;
+    var newPW = prompt("Bitte geben Sie ein neues Passwort für den Benutzer " + username + " ein:"  , "");
+    if(newPW == "") {
+      alert("Passwort kann nicht leer sein!");
+    }
+    else if(newPW !== null) {
+      Meteor.call('resetUsersPassword', userId, newPW);
+      alert("Neues Passwort für den Benutzer " + username + " ist neu: " + newPW);
+    }
+  },
+  'click #editEmailButton': function(event) {
+    var userId = event.target.getAttribute('userId');
+    $('#usersEmail').addClass('hidden');
+    $('#newEmailTd').removeClass('hidden');
+  },
+  'click #saveNewEmailButton': function(event) {
+    var userId = event.target.getAttribute('userId');
+    var oldEmail = $('#oldEmail').text();
+    var newEmail = $('#newEmailAddress').val();
+
+    Meteor.call('changeUsersEmail', userId, oldEmail, newEmail);
+    $('#newEmailTd').addClass('hidden');
+    $('#usersEmail').removeClass('hidden');
+  }
+});
+
+Template.useradministration.helpers({
+  'users': function() {
+    return Meteor.users.find();
+  },
+  'selectedUserClass': function(event) {
+    var userId = this._id;
+    var selectedUser = Session.get('selectedUser');
+    if(userId == selectedUser) {
+      return "selected";
+    }
+  },
+  'selectedUser': function() {
+    var userId = Session.get('selectedUser');
+    return Meteor.users.findOne(userId);
+  }
+});
+
+Template.admin.helpers({
+  'authorizedAdmin': function() {
+    if (Meteor.user()) {
+      var shortname = Meteor.user().profile.shortname;
+      var admins = ["stjo", "bret", "lfab", ""];
+
+      if(admins.indexOf(shortname) > -1) {
+        return true;
+      } else {
+        return "hidden";
+      }
+    }
+  }
+});
+
 // teams template events
 Template.adminTeams.events({
-  'submit form': function(){
+  'submit form': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var teamName = event.target.teamName.value;
     var teamShortname = event.target.teamShortname.value;
@@ -68,7 +134,7 @@ Template.adminTeams.helpers({
 
 // groups template events
 Template.adminGroups.events({
-  'submit form': function(){
+  'submit form': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var groupName = event.target.groupName.value;
 
@@ -133,7 +199,8 @@ Template.adminResults.onRendered(function() {
   });
 
   $('#gameTime').timeEntry({
-    show24Hours: true
+    show24Hours: true,
+    spinnerImage: ''
   });
 });
 
@@ -143,7 +210,7 @@ Template.adminResults.events({
     var groupId = $(event.target).val();
     Session.set('gameGroup', groupId);
   },
-  'submit form#addGame': function(){
+  'submit form#addGame': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var gameDate = event.target.gameDate.value;
     var gameTime = event.target.gameTime.value;
@@ -266,7 +333,7 @@ Template.adminResults.helpers({
 
 // adminCredits template events
 Template.adminCredits.events({
-  'submit form#sendCredits': function(){
+  'submit form#sendCredits': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var selectedUser = Session.get('selectedUserSend');
     var creditsToLoad = event.target.numberOfCreditsSend.value;
@@ -279,7 +346,7 @@ Template.adminCredits.events({
     var userId = $(event.target).val();
     Session.set('selectedUserSend', userId);
   },
-  'submit form#takeCredits': function(){
+  'submit form#takeCredits': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var selectedUser = Session.get('selectedUserTake');
     $('#usersListTake').prop('selectedIndex',0);

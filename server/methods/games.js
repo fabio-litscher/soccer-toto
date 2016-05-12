@@ -7,5 +7,8 @@ Meteor.methods({
       result1: result1,
       result2: result2
     });
+  },
+  'removeBet': function(betId) {
+    BetList.remove({ _id: betId });
   }
 });
