@@ -38,6 +38,11 @@ table.standardTable {
   background-color: white;
 }
 
+.userBets {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
 .selected{
   background-color: #D1EDE7;
 }

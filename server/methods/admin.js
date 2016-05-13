@@ -3,11 +3,11 @@ Meteor.methods({
   'resetUsersPassword': function(userId, newPassword) {
     Accounts.setPassword(userId, newPassword);
   },
-  'changeUsersEmail': function(userId, oldEmail, newEmail) {
-    console.log(oldEmail);
-    console.log(newEmail);
-    Accounts.addEmail(userId, newEmail);
-    Accounts.removeEmail(userId, oldEmail);
+  'changeUsersEmail': function(userId, newEmail) {
+    Meteor.users.update({ _id: userId }, { $set: {'emails.0.address': newEmail } });
+  },
+  'changeUsersShortname': function(userId, newShortname) {
+    Meteor.users.update({ _id: userId }, { $set: {'profile.shortname': newShortname } });
   },
   'insertNewTeam': function(teamName, teamShortname) {
     TeamList.insert({
@@ -104,8 +104,13 @@ Meteor.methods({
       // Tore an Teams verteilen
       var gamesCountTeam1 = TeamList.findOne({_id: game.team1}, {}).gamesCount + 1;
       var gamesCountTeam2 = TeamList.findOne({_id: game.team2}, {}).gamesCount + 1;
-      TeamList.update({_id: game.team1}, { $set: {gamesCount: gamesCountTeam1, goalsMade: resultTeam1, goalsGot: resultTeam2} });
-      TeamList.update({_id: game.team2}, { $set: {gamesCount: gamesCountTeam2, goalsMade: resultTeam2, goalsGot: resultTeam1} });
+      var goalsMadeTeam1 = parseInt(TeamList.findOne({_id: game.team1}, {}).goalsMade) + parseInt(resultTeam1);
+      var goalsMadeTeam2 = parseInt(TeamList.findOne({_id: game.team2}, {}).goalsMade) + parseInt(resultTeam2);
+      var goalsGotTeam1 = parseInt(TeamList.findOne({_id: game.team1}, {}).goalsGot) + parseInt(resultTeam2);
+      var goalsGotTeam2 = parseInt(TeamList.findOne({_id: game.team2}, {}).goalsGot) + parseInt(resultTeam1);
+
+      TeamList.update({_id: game.team1}, { $set: {gamesCount: gamesCountTeam1, goalsMade: goalsMadeTeam1, goalsGot: goalsGotTeam1} });
+      TeamList.update({_id: game.team2}, { $set: {gamesCount: gamesCountTeam2, goalsMade: goalsMadeTeam2, goalsGot: goalsGotTeam2} });
     }
     else {
       // wenn kein gruppenspiel

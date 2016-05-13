@@ -100,13 +100,30 @@
       <table>
         <tr>
           <th>Kurzzeichen:</th>
-          <td>{{selectedUser.profile.shortname}}</td>
+          <td id="usersShortname">
+            <p id="oldShortname" class="inline">{{selectedUser.profile.shortname}}</p>
+            {{#if selectedUser}}
+              <a type="submit" userId="{{selectedUser._id}}" id="editShortnameButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>
+            {{else}}
+              <b>Kein Benutzer ausgewählt.</b>
+            {{/if}}
+          </td>
+          <td id="newShortnameTd" class="hidden">
+            <div class="input-field inline-block">
+              <input id="newShortname" type="text" class="validate">
+              <label for="newShortname">Neues Kurzzeichen</label>
+            </div>
+            <a userId="{{selectedUser._id}}" id="saveNewShortnameButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
+            <a id="cancelNewShortname" href=""><i class="editIcon mdi mdi-close"></i></a>
+          </td>
         </tr>
         <tr>
           <th>Email:</th>
           <td id="usersEmail">
             <p id="oldEmail" class="inline">{{selectedUser.emails.[0].address}}</p>
-            <!--<a userId="{{selectedUser._id}}" id="editEmailButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>-->
+            {{#if selectedUser}}
+              <a userId="{{selectedUser._id}}" id="editEmailButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>
+            {{/if}}
           </td>
           <td id="newEmailTd" class="hidden">
             <div class="input-field inline-block">
@@ -114,15 +131,32 @@
               <label for="newEmailAddress">Neue Email</label>
             </div>
             <a userId="{{selectedUser._id}}" id="saveNewEmailButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
+            <a id="cancelNewEmail" href=""><i class="editIcon mdi mdi-close"></i></a>
           </td>
         </tr>
         <tr>
           <th>Guthaben:</th>
-          <td>{{selectedUser.profile.credits}}</td>
+          <td>
+            {{#if selectedUser}}
+              {{selectedUser.profile.credits}}
+            {{/if}}
+          </td>
         </tr>
         <tr>
           <th>Passwort:</th>
-          <td><button userId="{{selectedUser._id}}" id="resetPassword" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Zurücksetzen</button></td>
+          <td id="resetPasswordButtonTd">
+            {{#if selectedUser}}
+              <button userId="{{selectedUser._id}}" id="resetPassword" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Zurücksetzen</button>
+            {{/if}}
+          </td>
+          <td id="resetPasswordTd" class="hidden">
+            <div class="input-field inline-block">
+              <input id="newPassword" type="text" class="validate">
+              <label for="newPassword">Neues Passwort</label>
+            </div>
+            <a userId="{{selectedUser._id}}" id="saveNewPasswordButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
+            <a id="cancelPasswordReset" href=""><i class="editIcon mdi mdi-close"></i></a>
+          </td>
         </tr>
       </table>
     </div>

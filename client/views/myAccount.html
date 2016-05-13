@@ -10,7 +10,7 @@
       <div class="mdl-grid">
         <h3>Mein Konto</h3>
         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-          <h4>Meine Konto-Informationen</h4>
+          <h4>Meine Tipps</h4>
           {{> profileData}}
         </div>
 
@@ -31,7 +31,108 @@
 
 
 <template name="profileData">
-
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>Gewonnene Wetten (Gewinn total: <b>{{totalWonCredits}}</b>)</h5>
+      <div class="userBets">
+        <table class="standardTable gamesTable responsive-table bordered highlight">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Uhrzeit</th>
+              <th>Gruppe / Runde</th>
+              <th>Mannschaft 1</th>
+              <th>Mannschaft 2</th>
+              <th>Resultat</th>
+              <th>Gewinn</th>
+            </tr>
+          </thead>
+          {{#each wonUserBets}}
+            <thead class="mobileOnly">
+              <tr>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Gruppe / Runde</th>
+                <th>Mannschaft 1</th>
+                <th>Mannschaft 2</th>
+                <th>Resultat</th>
+                <th>Gewinn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{betGame.date}}</td>
+                <td>{{betGame.time}}</td>
+                <td>
+                  {{#if groupName}}
+                    {{groupName}}
+                  {{else}}
+                    <b>{{betGame.knockoutRound}}</b>
+                  {{/if}}
+                </td>
+                <td>{{team1.name}}</td>
+                <td>{{team2.name}}</td>
+                <td>{{result1}}:{{result2}}</td>
+                <td>{{wonCredits}}.-</td>
+              </tr>
+            </tbody>
+            <hr class="mobileOnly" />
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <h5>Verlorene Wetten (Verlust total: <b>{{totalLostCredits}}</b>)</h5>
+      <div class="userBets">
+        <table class="standardTable gamesTable responsive-table bordered highlight">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Uhrzeit</th>
+              <th>Gruppe / Runde</th>
+              <th>Mannschaft 1</th>
+              <th>Mannschaft 2</th>
+              <th>Tipp</th>
+              <th>Resultat</th>
+              <th>Verlust</th>
+            </tr>
+          </thead>
+          {{#each lostUserBets}}
+            <thead class="mobileOnly">
+              <tr>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Gruppe / Runde</th>
+                <th>Mannschaft 1</th>
+                <th>Mannschaft 2</th>
+                <th>Tipp</th>
+                <th>Resultat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{betGame.date}}</td>
+                <td>{{betGame.time}}</td>
+                <td>
+                  {{#if groupName}}
+                    {{groupName}}
+                  {{else}}
+                    <b>{{betGame.knockoutRound}}</b>
+                  {{/if}}
+                </td>
+                <td>{{team1.name}}</td>
+                <td>{{team2.name}}</td>
+                <td>{{result1}}:{{result2}}</td>
+                <td>{{betGame.result1}}:{{betGame.result2}}</td>
+                <td>2.-</td>
+              </tr>
+            </tbody>
+            <hr class="mobileOnly" />
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 

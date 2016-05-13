@@ -1,3 +1,78 @@
+
+totalWonCredits = 0;
+totalLostCredits = 0;
+Template.profileData.helpers({
+  'wonUserBets': function() {
+    var wonBets = [];
+    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+      if(GameList.findOne({ _id: doc.game })) {
+        var result1 = GameList.findOne({ _id: doc.game }).result1;
+        var result2 = GameList.findOne({ _id: doc.game }).result2;
+        if(result1 != undefined && (doc.result1 == result1 && doc.result2 == result2)) {
+          wonBets.push(doc);
+        }
+      }
+    });
+    return wonBets;
+  },
+  'lostUserBets': function() {
+    var lostBets = [];
+    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+      if(GameList.findOne({ _id: doc.game })) {
+        var result1 = GameList.findOne({ _id: doc.game }).result1;
+        var result2 = GameList.findOne({ _id: doc.game }).result2;
+        if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
+          lostBets.push(doc);
+          if(!totalLostCredits) totalLostCredits = 2;
+          else totalLostCredits = totalLostCredits + 2;
+        }
+      }
+    });
+    //Session.set("totalLostCredits", totalLostCredits);
+    return lostBets;
+  },
+  'betGame': function() {
+    return GameList.findOne({ _id: this.game });
+  },
+  'groupName': function() {
+    var gameGroup = GameList.findOne({ _id: this.game }).group;
+    if(gameGroup == "noGroupGame") {
+      return false;
+    } else {
+      return GroupList.findOne({ _id: gameGroup }).name;
+    }
+  },
+  'team1': function() {
+    var teamId = GameList.findOne({ _id: this.game }).team1;
+    var team1 = TeamList.findOne({_id: teamId});
+    return team1;
+  },
+  'team2': function() {
+    var teamId = GameList.findOne({ _id: this.game }).team2;
+    var team2 = TeamList.findOne({_id: teamId});
+    return team2;
+  },
+  'wonCredits': function() {
+    var result1 = GameList.findOne({ _id: this.game }).result1;
+    var result2 = GameList.findOne({ _id: this.game }).result2;
+
+    var totalBets = BetList.find({ game: this.game }, {}).count();
+    var totalGamePot = totalBets * 2;
+    var countCorrectBets = BetList.find({ game: this.game, result1: result1, result2: result2 }, {}).count();
+    var creditsPerBet = totalGamePot / countCorrectBets;
+    creditsPerBet = Math.floor(creditsPerBet);
+
+    totalWonCredits = totalWonCredits + creditsPerBet;
+    return creditsPerBet;
+  },
+  'totalWonCredits': function() {
+    return totalWonCredits;
+  },
+  'totalLostCredits': function() {
+    return totalLostCredits;
+  }
+});
+
 // groupOverview template events
 Template.userBets.events({
   'submit form#addWinner': function(event){

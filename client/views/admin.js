@@ -1,20 +1,28 @@
 Template.useradministration.events({
   'click .user': function(event){
-    //var userId = event.target.getAttribute("userId");
     var userId = this._id;
     Session.set('selectedUser', userId);
   },
   'click #resetPassword': function(event) {
     var userId = event.target.getAttribute('userId');
-    var username = Meteor.users.findOne(userId).profile.shortname;
-    var newPW = prompt("Bitte geben Sie ein neues Passwort für den Benutzer " + username + " ein:"  , "");
-    if(newPW == "") {
-      alert("Passwort kann nicht leer sein!");
+    $('#resetPasswordButtonTd').addClass('hidden');
+    $('#resetPasswordTd').removeClass('hidden');
+  },
+  'click #saveNewPasswordButton': function(event) {
+    var user = $('#saveNewPasswordButton').attr('userId');
+    var newPassword = $('#newPassword').val();
+
+    if(newPassword == "") alert("Passwort darf nicht leer sein!");
+    else {
+      Meteor.call('resetUsersPassword', user, newPassword);
+      $('#newPassword').val("");
+      $('#resetPasswordTd').addClass('hidden');
+      $('#resetPasswordButtonTd').removeClass('hidden');
     }
-    else if(newPW !== null) {
-      Meteor.call('resetUsersPassword', userId, newPW);
-      alert("Neues Passwort für den Benutzer " + username + " ist neu: " + newPW);
-    }
+  },
+  'click #cancelPasswordReset': function() {
+    $('#resetPasswordTd').addClass('hidden');
+    $('#resetPasswordButtonTd').removeClass('hidden');
   },
   'click #editEmailButton': function(event) {
     var userId = event.target.getAttribute('userId');
@@ -22,14 +30,41 @@ Template.useradministration.events({
     $('#newEmailTd').removeClass('hidden');
   },
   'click #saveNewEmailButton': function(event) {
-    var userId = event.target.getAttribute('userId');
-    var oldEmail = $('#oldEmail').text();
+    var user = $('#saveNewEmailButton').attr('userId');
     var newEmail = $('#newEmailAddress').val();
 
-    Meteor.call('changeUsersEmail', userId, oldEmail, newEmail);
+    Meteor.call('changeUsersEmail', user, newEmail, function (error, result) {
+      if(error && error.error == 500) alert("Email-Adresse ist bereits einem anderen User zugewiesen!");
+    });
+    $('#newEmailAddress').val("");
     $('#newEmailTd').addClass('hidden');
     $('#usersEmail').removeClass('hidden');
-  }
+  },
+  'click #cancelNewEmail': function() {
+    $('#newEmailTd').addClass('hidden');
+    $('#usersEmail').removeClass('hidden');
+  },
+  'click #editShortnameButton': function(event) {
+    var userId = event.target.getAttribute('userId');
+    $('#usersShortname').addClass('hidden');
+    $('#newShortnameTd').removeClass('hidden');
+  },
+  'click #saveNewShortnameButton': function(event) {
+    var user = $('#saveNewShortnameButton').attr('userId');
+    var newShortname = $('#newShortname').val();
+
+    if(newShortname == "") alert("Kurzzeichen darf nicht leer sein!");
+    else {
+      Meteor.call('changeUsersShortname', user, newShortname);
+      $('#newShortname').val("");
+      $('#newShortnameTd').addClass('hidden');
+      $('#usersShortname').removeClass('hidden');
+    }
+  },
+  'click #cancelNewShortname': function() {
+    $('#newShortnameTd').addClass('hidden');
+    $('#usersShortname').removeClass('hidden');
+  },
 });
 
 Template.useradministration.helpers({
