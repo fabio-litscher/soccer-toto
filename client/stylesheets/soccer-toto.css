@@ -18,6 +18,11 @@
   margin-left: 10px;
 }
 
+.homeUserPotBets {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
 .myBetsText {
   font-size: 15px;
 }
