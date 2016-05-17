@@ -162,6 +162,54 @@
     </div>
     <div class="mdl-cell mdl-cell--5-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <h5>Alle Tipps</h5>
+      <div class="userBets">
+        <table class="standardTable gamesTable responsive-table bordered highlight">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Uhrzeit</th>
+              <th>Gruppe / Runde</th>
+              <th>Mannschaft 1</th>
+              <th>Mannschaft 2</th>
+              <th>Tipp</th>
+              <th>Resultat</th>
+              <th>Gewinn/Verlust</th>
+            </tr>
+          </thead>
+          {{#each userBets}}
+            <thead class="mobileOnly">
+              <tr>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Gruppe / Runde</th>
+                <th>Mannschaft 1</th>
+                <th>Mannschaft 2</th>
+                <th>Tipp</th>
+                <th>Resultat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{betGame.date}}</td>
+                <td>{{betGame.time}}</td>
+                <td>
+                  {{#if groupName}}
+                    {{groupName}}
+                  {{else}}
+                    <b>{{betGame.knockoutRound}}</b>
+                  {{/if}}
+                </td>
+                <td>{{team1.name}}</td>
+                <td>{{team2.name}}</td>
+                <td>{{result1}}:{{result2}}</td>
+                <td>{{betGame.result1}}:{{betGame.result2}}</td>
+                <td>{{credits}}.-</td>
+              </tr>
+            </tbody>
+            <hr class="mobileOnly" />
+          {{/each}}
+        </table>
+      </div>
     </div>
   </div>
 </template>

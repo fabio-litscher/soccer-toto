@@ -81,6 +81,46 @@ Template.useradministration.helpers({
   'selectedUser': function() {
     var userId = Session.get('selectedUser');
     return Meteor.users.findOne(userId);
+  },
+  'userBets': function() {
+    return BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} });
+  },
+  'betGame': function() {
+    return GameList.findOne({ _id: this.game });
+  },
+  'groupName': function() {
+    var gameGroup = GameList.findOne({ _id: this.game }).group;
+    if(gameGroup == "noGroupGame") {
+      return false;
+    } else {
+      return GroupList.findOne({ _id: gameGroup }).name;
+    }
+  },
+  'team1': function() {
+    var teamId = GameList.findOne({ _id: this.game }).team1;
+    var team1 = TeamList.findOne({_id: teamId});
+    return team1;
+  },
+  'team2': function() {
+    var teamId = GameList.findOne({ _id: this.game }).team2;
+    var team2 = TeamList.findOne({_id: teamId});
+    return team2;
+  },
+  'credits': function() {
+    var result1 = GameList.findOne({ _id: this.game }).result1;
+    var result2 = GameList.findOne({ _id: this.game }).result2;
+    var tipp1 = this.result1;
+    var tipp2 = this.result2;
+
+    if(tipp1 == result1 && tipp2 == result2) {
+      var totalBets = BetList.find({ game: this.game }, {}).count();
+      var totalGamePot = totalBets * 2;
+      var countCorrectBets = BetList.find({ game: this.game, result1: result1, result2: result2 }, {}).count();
+      var creditsPerBet = totalGamePot / countCorrectBets;
+      creditsPerBet = Math.floor(creditsPerBet);
+      return creditsPerBet;
+    }
+    else return -2;
   }
 });
 

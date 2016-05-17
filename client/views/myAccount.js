@@ -23,7 +23,6 @@ Template.profileData.helpers({
         }
       }
     });
-    //Session.set("totalLostCredits", totalLostCredits);
     return lostBets;
   },
   'betGame': function() {
