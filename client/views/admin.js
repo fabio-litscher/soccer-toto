@@ -83,7 +83,8 @@ Template.useradministration.helpers({
     return Meteor.users.findOne(userId);
   },
   'userBets': function() {
-    return BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} });
+    var userId = Session.get('selectedUser');
+    return BetList.find({ user: userId }, {});
   },
   'betGame': function() {
     return GameList.findOne({ _id: this.game });
