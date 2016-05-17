@@ -113,15 +113,16 @@ Template.useradministration.helpers({
     var tipp1 = this.result1;
     var tipp2 = this.result2;
 
-    if(tipp1 == result1 && tipp2 == result2) {
+    if(!result1) return "";
+    else if(tipp1 == result1 && tipp2 == result2) {
       var totalBets = BetList.find({ game: this.game }, {}).count();
       var totalGamePot = totalBets * 2;
       var countCorrectBets = BetList.find({ game: this.game, result1: result1, result2: result2 }, {}).count();
       var creditsPerBet = totalGamePot / countCorrectBets;
       creditsPerBet = Math.floor(creditsPerBet);
-      return creditsPerBet;
+      return creditsPerBet + ".-";
     }
-    else return -2;
+    else return "-2.-";
   }
 });
 
