@@ -29,6 +29,9 @@ Meteor.methods({
     Meteor.users.update(userId, { $set: {"profile.credits": 0} });
   },
   'creditsToPot': function(potName, creditsToAdd) {
+    console.log("in creditsToPot function:");
+    console.log(creditsToAdd);
+
     creditsToAdd = parseInt(creditsToAdd);
     var exists = PotList.findOne({ name: potName }, {});
 

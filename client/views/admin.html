@@ -103,15 +103,14 @@
           <td id="usersShortname">
             <p id="oldShortname" class="inline">{{selectedUser.profile.shortname}}</p>
             {{#if selectedUser}}
-              <a type="submit" userId="{{selectedUser._id}}" id="editShortnameButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>
+              <a type="submit" userId="{{selectedUser._id}}" id="editShortnameButton" href="#"><i class="editIcon mdi mdi-border-color"></i></a>
             {{else}}
               <b>Kein Benutzer ausgewählt.</b>
             {{/if}}
           </td>
           <td id="newShortnameTd" class="hidden">
             <div class="input-field inline-block">
-              <input id="newShortname" type="text" class="validate">
-              <label for="newShortname">Neues Kurzzeichen</label>
+              <input id="newShortname" type="text" class="validate" value="{{selectedUser.profile.shortname}}">
             </div>
             <a userId="{{selectedUser._id}}" id="saveNewShortnameButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
             <a id="cancelNewShortname" href=""><i class="editIcon mdi mdi-close"></i></a>
@@ -127,11 +126,32 @@
           </td>
           <td id="newEmailTd" class="hidden">
             <div class="input-field inline-block">
-              <input id="newEmailAddress" type="email" class="validate">
-              <label for="newEmailAddress">Neue Email</label>
+              <input id="newEmailAddress" type="email" class="validate" value="{{selectedUser.emails.[0].address}}">
             </div>
             <a userId="{{selectedUser._id}}" id="saveNewEmailButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
             <a id="cancelNewEmail" href=""><i class="editIcon mdi mdi-close"></i></a>
+          </td>
+        </tr>
+        <tr>
+          <th>Torschützenkönig:</th>
+          <td id="usersTopScorer">
+            <p id="oldTopScorer" class="inline">
+              {{#if selectedUser.profile.topScorer}}
+                {{selectedUser.profile.topScorer}}
+              {{/if}}
+            </p>
+            {{#if selectedUser}}
+              {{#if selectedUser.profile.topScorer}}
+                <a type="submit" userId="{{selectedUser._id}}" id="editTopScorerButton" href=""><i class="editIcon mdi mdi-border-color"></i></a>
+              {{/if}}
+            {{/if}}
+          </td>
+          <td id="newTopScorerTd" class="hidden">
+            <div class="input-field inline-block">
+              <input id="newTopScorer" type="text" class="validate" value="{{selectedUser.profile.topScorer}}">
+            </div>
+            <a userId="{{selectedUser._id}}" id="saveNewTopScorerButton" href=""><i class="editIcon mdi mdi-content-save"></i></a>
+            <a id="cancelNewTopScorer" href=""><i class="editIcon mdi mdi-close"></i></a>
           </td>
         </tr>
         <tr>

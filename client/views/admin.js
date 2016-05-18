@@ -65,11 +65,32 @@ Template.useradministration.events({
     $('#newShortnameTd').addClass('hidden');
     $('#usersShortname').removeClass('hidden');
   },
+  'click #editTopScorerButton': function(event) {
+    var userId = event.target.getAttribute('userId');
+    $('#usersTopScorer').addClass('hidden');
+    $('#newTopScorerTd').removeClass('hidden');
+  },
+  'click #saveNewTopScorerButton': function(event) {
+    var user = $('#saveNewTopScorerButton').attr('userId');
+    var newTopScorer = $('#newTopScorer').val();
+
+    if(newTopScorer == "") alert("Torschützenkönig darf nicht leer sein!");
+    else {
+      Meteor.call('changeUsersTopScorer', user, newTopScorer);
+      $('#newTopScorer').val("");
+      $('#newTopScorerTd').addClass('hidden');
+      $('#usersTopScorer').removeClass('hidden');
+    }
+  },
+  'click #cancelNewTopScorer': function() {
+    $('#newTopScorerTd').addClass('hidden');
+    $('#usersTopScorer').removeClass('hidden');
+  }
 });
 
 Template.useradministration.helpers({
   'users': function() {
-    return Meteor.users.find();
+    return Meteor.users.find({}, { sort: {"profile.shortname": 1} });
   },
   'selectedUserClass': function(event) {
     var userId = this._id;
@@ -266,13 +287,14 @@ Template.adminResults.onRendered(function() {
     labelYearSelect: 'Auswahl Jahr',
     monthsFull: [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
     monthsShort: [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
-    weekdaysFull: [ 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag' ],
-    weekdaysShort: [ 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So' ],
-    weekdaysLetter: [ 'M', 'D', 'M', 'D', 'F', 'S', 'S' ],
+    weekdaysFull: [ 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag' ],
+    weekdaysShort: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
+    weekdaysLetter: [ 'S', 'M', 'D', 'M', 'D', 'F', 'S' ],
     today: 'Heute',
     clear: 'Clear',
     close: 'Ok',
-    format: 'dd.mm.yyyy'
+    format: 'dd.mm.yyyy',
+    firstDay: 1
   });
 
   $('#gameTime').timeEntry({
@@ -369,10 +391,10 @@ Template.adminResults.helpers({
     }
   },
   'doneGames': function() {
-    return GameList.find({ result1: { $exists: true } }, {sort: {date: 1, time: 1} });
+    return GameList.find({ result1: { $exists: true } }, {sort: {datetime: 1} });
   },
   'openGames': function() {
-    return GameList.find({ result1: { $exists: false } }, {sort: {date: 1, time: 1} });
+    return GameList.find({ result1: { $exists: false } }, {sort: {datetime: 1} });
   },
   'team1': function() {
     var team1 = TeamList.findOne({_id: this.team1});

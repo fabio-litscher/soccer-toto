@@ -21,7 +21,7 @@
         <ul class="collection homeUserPotBets">
           {{#each userWithWinner}}
             <li class="collection-item">
-              <div>{{profile.shortname}}<p class="secondary-content">{{winnerTeam}}</p></div>
+              <div><span style="color: #26a69a;">{{winnerTeam}}</span><p class="secondary-content" style="color: black;">{{profile.shortname}}</p></div>
             </li>
           {{/each}}
         </ul>
@@ -32,7 +32,7 @@
         <ul class="collection homeUserPotBets">
           {{#each userWithTopScorer}}
             <li class="collection-item">
-              <div>{{profile.shortname}}<p class="secondary-content">{{profile.topScorer}}</p></div>
+              <div><span style="color: #26a69a;">{{profile.topScorer}}</span><p class="secondary-content" style="color: black;">{{profile.shortname}}</p></div>
             </li>
           {{/each}}
         </ul>

@@ -45,7 +45,7 @@ Template.openGames.events({
 // openGames template helpers
 Template.openGames.helpers({
   'openGames': function() {
-    return GameList.find({result1: { $exists: false } }, {sort: {date: 1, time: 1} });
+    return GameList.find({result1: { $exists: false } }, {sort: {datetime: 1} });
   },
   'groupName': function() {
     if(this.group == "noGroupGame") {
@@ -122,7 +122,7 @@ function getUsername(userId) {
 // closedGames template helpers
 Template.finishedGames.helpers({
   'closedGames': function() {
-    return GameList.find({result1: { $exists: true } }, {sort: {date: -1, time: -1} });
+    return GameList.find({result1: { $exists: true } }, {sort: {datetime: -1} });
   },
   'groupName': function() {
     if(this.group == "noGroupGame") {

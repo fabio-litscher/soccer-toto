@@ -2,18 +2,17 @@ Template.pots.helpers({
   'userWithWinner': function() {
     var exists = Meteor.users.find({ "profile.winner": { $exists: true } }, {});
     if(exists) {
-      return Meteor.users.find({ "profile.winner": { $exists: true } }, {});
+      return Meteor.users.find({ "profile.winner": { $exists: true } }, { sort: {"profile.winner": 1 } });
     }
   },
   'userWithTopScorer': function() {
     var exists = Meteor.users.find({ "profile.topScorer": { $exists: true } }, {});
     if(exists) {
-      return Meteor.users.find({ "profile.topScorer": { $exists: true } }, {});
+      return Meteor.users.find({ "profile.topScorer": { $exists: true } }, { sort: {"profile.topScorer": 1 } });
     }
   },
   'winnerTeam': function() {
     return TeamList.findOne({ _id: this.profile.winner }).name;
-
   },
   'winnerPot': function() {
     var exists = PotList.findOne({ name: "winner" }, {});

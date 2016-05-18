@@ -17,6 +17,9 @@
   margin-top: 18px;
   margin-left: 10px;
 }
+.errormessage {
+  color: red;
+}
 
 .homeUserPotBets {
   max-height: 450px;

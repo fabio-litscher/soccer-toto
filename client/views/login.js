@@ -6,13 +6,19 @@ Template.register.events({
       var password = $('[name=registerPassword]').val();
 
       Accounts.createUser({
-          email: email,
-          password: password,
-          profile: {
-            shortname: shortname
-          }
+        email: email,
+        password: password,
+        profile: {
+          shortname: shortname
+        }
+      }, function(error){
+        if(error){
+            console.log(error.reason); // Output error if registration fails
+            $("#registerError").removeClass('hidden');
+        } else {
+            Router.go("home"); // Redirect user if registration succeeds
+        }
       });
-      Router.go('home');
   }
 });
 
@@ -21,7 +27,13 @@ Template.login.events({
     event.preventDefault();
     var email = $('[name=loginEmail]').val();
     var password = $('[name=loginPassword]').val();
-    Meteor.loginWithPassword(email, password);
-    Router.go('home');
+    Meteor.loginWithPassword(email, password, function(error){
+      if(error){
+        console.log(error.reason);
+        $("#loginError").removeClass('hidden');
+      } else {
+        Router.go("home");
+      }
+    });
   }
 });

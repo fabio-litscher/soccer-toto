@@ -9,6 +9,9 @@ Meteor.methods({
   'changeUsersShortname': function(userId, newShortname) {
     Meteor.users.update({ _id: userId }, { $set: {'profile.shortname': newShortname } });
   },
+  'changeUsersTopScorer': function(userId, newTopScorer) {
+    Meteor.users.update({ _id: userId }, { $set: {'profile.topScorer': newTopScorer } });
+  },
   'insertNewTeam': function(teamName, teamShortname) {
     TeamList.insert({
       name: teamName,
@@ -133,8 +136,12 @@ Meteor.methods({
 
     // Pot auf alle richtigen Ergebnisse aufteilen
     var countCorrectBets = BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).count();
-    var creditsPerBet = totalGamePot / countCorrectBets;
-    creditsPerBet = Math.floor(creditsPerBet);
+    if(countCorrectBets == 0) {
+      var creditsPerBet = 0;
+    } else {
+      var creditsPerBet = totalGamePot / countCorrectBets;
+      creditsPerBet = Math.floor(creditsPerBet);
+    }
 
     // Credits an entsprechende User übertragen
     var countUsers = 0;
@@ -143,8 +150,15 @@ Meteor.methods({
       countUsers = countUsers + 1;
     });
 
+    console.log(totalGamePot);
+    console.log(countUsers);
+    console.log(creditsPerBet);
+
     // Rundungsdifferenz in Sieger-Pott übertragen
     var roundingDifference = totalGamePot - countUsers * creditsPerBet;
+
+    console.log("in insertGameResult function (rounding):");
+    console.log(roundingDifference);
 
     Meteor.call('creditsToPot', "winner", roundingDifference);
   },
