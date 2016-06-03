@@ -26,6 +26,11 @@
   overflow-y: auto;
 }
 
+#betRanking {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .myBetsText {
   font-size: 15px;
 }

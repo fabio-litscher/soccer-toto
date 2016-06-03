@@ -11,6 +11,7 @@ Router.route('/logout', {
   template: 'login_register'
 });
 Router.route('/loginRegister');
+Router.route('/rules');
 Router.route('/groups');
 Router.route('/games');
 Router.route('/myAccount');
