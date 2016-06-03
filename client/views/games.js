@@ -108,6 +108,11 @@ Template.openGames.helpers({
     betString = betString + "<br />";
 
     return Spacebars.SafeString(betString);
+  },
+  'gamePot': function() {
+    var totalBets = BetList.find({ game: this._id }, {}).count();
+    var totalGamePot = totalBets * 2;
+    return totalGamePot;
   }
 });
 
