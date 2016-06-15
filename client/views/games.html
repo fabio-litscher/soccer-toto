@@ -121,6 +121,7 @@
             <th>Mannschaft 1</th>
             <th>Mannschaft 2</th>
             <th>Ergebnis / Sieger</th>
+            <th>Tipps</th>
           </tr>
         </thead>
         {{#each closedGames}}
@@ -152,6 +153,22 @@
                 {{#unless groupName}}
                    - <b>{{winnerTeam.name}}</b>
                 {{/unless}}
+              </td>
+              <td>
+                {{#if currentUser}}
+                  {{#if hasBetsForGame}}
+                    <td>
+                      <b>Gesamtgewinn: {{gamePot}}.- CHF</b><br />
+                      <button id="showBets_{{_id}}" gameId="{{_id}}" class="showAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Alle Tipps anzeigen</button>
+                      <button id="hideBets_{{_id}}" gameId="{{_id}}" class="hidden hideAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Ausblenden</button>
+                      <span id="bets_{{_id}}" class="hidden">{{gameBets}}</span>
+                    </td>
+                  {{else}}
+                    <td><br /></td>
+                  {{/if}}
+                {{else}}
+                  <td><br /></td>
+                {{/if}}
               </td>
             </tr>
           </tbody>
