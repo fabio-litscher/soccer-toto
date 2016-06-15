@@ -24,6 +24,7 @@
         <tr>
           <th>Benutzer</th>
           <th>Anzahl richtige Tipps</th>
+          <th>Gewinn</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,7 @@
           <tr>
             <td>{{username}}</td>
             <td>{{wonBets}}</td>
+            <td>{{totalBets}}</td>
           </tr>
         {{/each}}
       </tbody>
@@ -42,7 +44,7 @@
   <h3>Pots</h3>
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Sieger-Pot: <b>{{winnerPot}}.- CHF</b></h4>
+        <h4>Sieger-Pot:<b><br />{{winnerPot}}.-&nbsp;CHF</b></h4>
         <h5>Tipps</h5>
         <ul class="collection homeUserPotBets">
           {{#each userWithWinner}}
@@ -53,7 +55,7 @@
         </ul>
       </div>
       <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <h4>Torschützenkönig-Pot: <b>{{topScorerPot}}.- CHF</b></h4>
+        <h4>Torschützenkönig-Pot:<b><br />{{topScorerPot}}.-&nbsp;CHF</b></h4>
         <h5>Tipps</h5>
         <ul class="collection homeUserPotBets">
           {{#each userWithTopScorer}}

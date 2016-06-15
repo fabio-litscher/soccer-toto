@@ -16,22 +16,34 @@ Template.betRanking.helpers({
     var k = 0;
     wonBets.forEach( function(doc) {
       if(k == 0) {
+        var countTotalBets = BetList.find({ game: doc.game }).count();
+        console.log(countTotalBets);
         users[i] = {
           user: doc.user,
-          wonBets: 1
+          wonBets: 1,
+          totalBets: parseInt(countTotalBets)
         };
         k = 1;
       }
       else {
-        if(doc.user == users[i].user) users[i].wonBets += 1;
+        if(doc.user == users[i].user) {
+          users[i].wonBets += 1;
+          if(doc.game != gameBefore) {
+            var countTotalBets = BetList.find({ game: doc.game }).count();
+            users[i].totalBets += parseInt(countTotalBets);
+          }
+        }
         else {
           i++;
+          var countTotalBets = BetList.find({ game: doc.game }).count();
           users[i] = {
             user: doc.user,
-            wonBets: 1
+            wonBets: 1,
+            totalBets: parseInt(countTotalBets)
           }
         }
       }
+      var gameBefore = doc.game;
     });
 
     users.sort(function(a,b) {return (a.wonBets > b.wonBets) ? -1 : ((b.wonBets > a.wonBets) ? 1 : 0);} );
