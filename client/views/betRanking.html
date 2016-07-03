@@ -1,0 +1,39 @@
+<template name="betRankingPage">
+  <div class="page-content">
+    <h2>Tipp-Rangliste</h2>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> betRanking}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="betRanking">
+  <h3>Tipp-Rangliste</h3>
+  <p>
+    Es werden nur Benutzer angezeigt, die min. einmal richtig getippt haben.<br />
+    In der Spalte Bilanz werden nur die bereits abgeschlossenen Spiele mit deren Wetteinsätzen verrechnet. Ohne Sieger und Torschützenkönig.<br />
+    <b>Sortiert nach Anzahl richtiger Tipps.</b>
+  </p>
+  <div id="betRanking">
+    <table id="" class="standardTable groupsTable bordered highlight">
+      <thead>
+        <tr>
+          <th>Benutzer</th>
+          <th>Anzahl richtige Tipps</th>
+          <th>Bilanz</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each rankingUsers}}
+          <tr>
+            <td>{{username}}</td>
+            <td>{{wonBets}}</td>
+            <td>{{userBalance}}.- CHF</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>

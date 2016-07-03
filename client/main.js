@@ -12,6 +12,7 @@ Router.route('/logout', {
 });
 Router.route('/loginRegister');
 Router.route('/rules');
+Router.route('/betRankingPage');
 Router.route('/groups');
 Router.route('/games');
 Router.route('/myAccount');
