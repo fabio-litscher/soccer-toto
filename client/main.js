@@ -27,3 +27,4 @@ Meteor.subscribe('theBet');
 Meteor.subscribe('thePots');
 Meteor.subscribe("users");
 Meteor.subscribe("messages");
+Meteor.subscribe("topScorer");

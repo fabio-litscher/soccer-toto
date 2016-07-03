@@ -12,6 +12,12 @@ Meteor.methods({
   'changeUsersTopScorer': function(userId, newTopScorer) {
     Meteor.users.update({ _id: userId }, { $set: {'profile.topScorer': newTopScorer } });
   },
+  'insertTopScorerPlayer': function(playerName, goals) {
+    TopScorerList.insert({
+      name: playerName,
+      countGoals: goals
+    });
+  },
   'insertNewTeam': function(teamName, teamShortname) {
     TeamList.insert({
       name: teamName,
@@ -24,6 +30,9 @@ Meteor.methods({
       goalsGot: 0,
       points: 0
     });
+  },
+  'removeTopScorerPlayer': function(topScorerId) {
+    TopScorerList.remove({ _id: topScorerId });
   },
   'removeTeam': function(selectedTeam) {
     // Alle Spiele löschen in der die Mannschaft vorkommt

@@ -1,3 +1,9 @@
+Template.TopScorerList.helpers({
+  'topScorerPlayer': function() {
+    return TopScorerList.find({}, { sort: {countGoals: -1} });
+  }
+});
+
 Template.pots.helpers({
   'userWithWinner': function() {
     var exists = Meteor.users.find({ "profile.winner": { $exists: true } }, {});

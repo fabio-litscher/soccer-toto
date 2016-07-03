@@ -6,6 +6,9 @@
         {{> pots}}
       </div>
       <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        {{> TopScorerList}}
+      </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         {{> chat}}
       </div>
     </div>
@@ -14,6 +17,7 @@
 
 <template name="pots">
   <h3>Pots</h3>
+  {{#if currentUser}}
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <h4>Sieger-Pot:<b><br />{{winnerPot}}.-&nbsp;CHF</b></h4>
@@ -38,6 +42,9 @@
         </ul>
       </div>
     </div>
+  {{else}}
+    <h5>Sie müssen eingeloggt sein um die Pot-Stände sehen zu können.</h5>
+  {{/if}}
 </template>
 
 <template name="chat">
@@ -65,4 +72,18 @@
   {{else}}
     <h5>Sie müssen eingeloggt sein um den Live-Chat verwenden zu können!</h5>
   {{/if}}
+</template>
+
+<template name="TopScorerList">
+  <h3>Torschützen-Liste</h3>
+  <br />
+    <div id="topScorer">
+      <ul class="collection">
+        {{#each topScorerPlayer}}
+          <li class="collection-item">
+            <div><span style="color: #26a69a;">{{name}}</span><p class="secondary-content" style="color: black;"><b>{{countGoals}}</b> Tore</p></div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
 </template>

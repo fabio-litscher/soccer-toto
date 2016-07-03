@@ -5,3 +5,4 @@ GameList = new Mongo.Collection('game');
 BetList = new Mongo.Collection('bet');
 PotList = new Mongo.Collection('pot');
 MessageList = new Mongo.Collection('messages');
+TopScorerList = new Mongo.Collection('topScorer');

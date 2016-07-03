@@ -16,7 +16,10 @@ Meteor.publish('thePots', function(){
 });
 Meteor.publish("users", function(){
   return Meteor.users.find({});
-})
+});
 Meteor.publish("messages", function(){
   return MessageList.find();
-})
+});
+Meteor.publish("topScorer", function(){
+  return TopScorerList.find();
+});

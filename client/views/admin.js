@@ -1,3 +1,43 @@
+Template.adminTopScorer.events({
+  'submit form': function(event){
+    event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
+    var playerName = event.target.playerName.value;
+    var goals = event.target.countGoals.value;
+
+    event.target.playerName.value = "";
+    event.target.countGoals.value = "";
+
+    Meteor.call('insertTopScorerPlayer', playerName, goals);
+  },
+  'click .topScorer': function(event){
+    var topScorerId = this._id;
+    Session.set('selectedTopScorer', topScorerId);
+  },
+  'click #delTopScorer': function(event) {
+    event.preventDefault();
+    var topScorerId = event.target.getAttribute('playerId');
+
+    Meteor.call('removeTopScorerPlayer', topScorerId);
+  }
+});
+
+Template.adminTopScorer.helpers({
+  'topScorerPlayer': function() {
+    return TopScorerList.find({}, { sort: {countGoals: -1} });
+  },
+  'selectedTopScorerClass': function(event) {
+    var topScorerId = this._id;
+    var selectedTopScorer = Session.get('selectedTopScorer');
+    if(topScorerId == selectedTopScorer) {
+      return "selected";
+    }
+  },
+  'selectedTopScorer': function() {
+    var topScorerId = Session.get('selectedTopScorer');
+    return TopScorerList.findOne(topScorerId);
+  },
+});
+
 Template.useradministration.events({
   'click .user': function(event){
     var userId = this._id;

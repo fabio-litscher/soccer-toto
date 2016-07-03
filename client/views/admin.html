@@ -10,6 +10,11 @@
         </div>
 
         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h4>Torschützenkönig</h4>
+          {{> adminTopScorer}}
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
           <h4>Benutzerverwaltung</h4>
           {{> useradministration}}
         </div>
@@ -33,6 +38,45 @@
       <h3>Zugriff verweigert!</h3>
       <h5>Falls Sie Admin sind, vergewissern Sie sich, dass sie eingeloggt sind.</h5>
     {{/if}}
+  </div>
+</template>
+
+
+<template name="adminTopScorer">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <form id="addTopscorer">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+            <input id="playerName" name="playerName" type="text" required placeholder="Spielername">
+          </div>
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+            <input id="countGoals" name="countGoals" type="number" required placeholder="Anz. Tore">
+          </div>
+          <button id="addPlayer" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Spieler hinzufügen</button>
+        </div>
+      </form>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+      <div id="adminUserlist" class="collection">
+        {{#each topScorerPlayer }}
+          <li class="topScorer {{selectedTopScorerClass}} mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {{name}} <p class="secondary-content">{{countGoals}}</p>
+            </span>
+          </li>
+        {{/each}}
+      </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+      <h4>Ausgewählter Spieler</h4>
+      {{#if selectedTopScorer}}
+        <p>{{selectedTopScorer.name}}</p>
+        <button id="delTopScorer" playerId="{{selectedTopScorer._id}}" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Aus Liste löschen</button>
+      {{else}}
+        <b>Kein Spieler ausgewählt.</b>
+      {{/if}}
+    </div>
   </div>
 </template>
 
