@@ -186,3 +186,18 @@ Meteor.methods({
     PotList.remove({ name: potName });
   }
 });
+
+Accounts.onCreateUser(function(options, user) {
+    //user is not an admin
+    user.isAdmin=false;
+    var shortname="";
+    if (options.profile) {
+      user.profile=options.profile;
+      shortname=user.profile.shortname;
+    }
+
+    var admins = ["stjo", "bret", "pire"];
+    if(admins.indexOf(shortname) > -1) user.isAdmin=true;
+
+    return user;
+});
