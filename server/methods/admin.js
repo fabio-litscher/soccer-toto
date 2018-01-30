@@ -75,6 +75,10 @@ Meteor.methods({
   },
   'insertGameResult': function(gameId, resultTeam1, resultTeam2, bet, knockoutWinner) {
 
+    // make sure we are all "int"
+    resultTeam1=parseInt(resultTeam1);
+    resultTeam2=parseInt(resultTeam2);
+
     // Punkte, Sieg/Niederlage/Unentschieden, Tore an Teams verteilen, wenn Gruppenspiel
     var game = GameList.findOne({_id: gameId}, {});
     if (game.group != "noGroupGame") {
@@ -82,8 +86,8 @@ Meteor.methods({
         { _id: gameId },
         { $set:
           {
-            result1: parseInt(resultTeam1),
-            result2: parseInt(resultTeam2)
+            result1: resultTeam1,
+            result2: resultTeam2
           }
         }
       );
@@ -130,8 +134,8 @@ Meteor.methods({
         { _id: gameId },
         { $set:
           {
-            result1: parseInt(resultTeam1),
-            result2: parseInt(resultTeam2),
+            result1: resultTeam1,
+            result2: resultTeam2,
             knockoutWinner: knockoutWinner
           }
         }
@@ -160,9 +164,9 @@ Meteor.methods({
       countUsers = countUsers + 1;
     });
 
-    console.log(totalGamePot);
-    console.log(countUsers);
-    console.log(creditsPerBet);
+    console.log("totalGamePot="+totalGamePot);
+    console.log("countUsers="+countUsers);
+    console.log("creditsPerBet="+creditsPerBet);
 
     // Rundungsdifferenz in Sieger-Pott übertragen
     var roundingDifference = totalGamePot - countUsers * creditsPerBet;
