@@ -22,12 +22,16 @@ Meteor.methods({
     Meteor.users.update(Meteor.userId(), { $set: {"profile.totalWonCredits": totalWonCredits} });
   },
   'myRecalcAll': function() {
+    Meteor.call('thisRecalcAll',Meteor.userId())
+    console.log("myRecalcAll");
+  },
+  'thisRecalcAll': function(userid){
     // set all cached data invalid!
-    Meteor.users.update(Meteor.userId(), { $set: {
+    Meteor.users.update(userid, { $set: {
         "profile.totalWonCredits": -1,
         "profile.totalLostCredits": -1
       } });
-    console.log("myRecalcAll");
+    console.log("thisRecalcAll: "+userid);
   },
   'myTotalLostCredits': function() {
     var totalLostCredits = 0;

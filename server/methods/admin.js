@@ -82,8 +82,8 @@ Meteor.methods({
         { _id: gameId },
         { $set:
           {
-            result1: resultTeam1,
-            result2: resultTeam2
+            result1: parseInt(resultTeam1),
+            result2: parseInt(resultTeam2)
           }
         }
       );
@@ -130,8 +130,8 @@ Meteor.methods({
         { _id: gameId },
         { $set:
           {
-            result1: resultTeam1,
-            result2: resultTeam2,
+            result1: parseInt(resultTeam1),
+            result2: parseInt(resultTeam2),
             knockoutWinner: knockoutWinner
           }
         }
@@ -156,6 +156,7 @@ Meteor.methods({
     var countUsers = 0;
     BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).forEach( function(doc) {
       Meteor.call('addCredits', doc.user, creditsPerBet);
+      Meteor.call('thisRecalcAll', doc.user);
       countUsers = countUsers + 1;
     });
 
