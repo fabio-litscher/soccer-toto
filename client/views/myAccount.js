@@ -59,36 +59,20 @@ Template.profileData.helpers({
     return creditsPerBet;
   },
   'totalWonCredits': function() {
-    var totalWonCredits = 0;
-    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
-      if(GameList.findOne({ _id: doc.game })) {
-        var result1 = GameList.findOne({ _id: doc.game }).result1;
-        var result2 = GameList.findOne({ _id: doc.game }).result2;
-        if(result1 != undefined && (doc.result1 == result1 && doc.result2 == result2)) {
-          var totalBets = BetList.find({ game: doc.game }, {}).count();
-          var totalGamePot = totalBets * 2;
-          var countCorrectBets = BetList.find({ game: doc.game, result1: result1, result2: result2 }, {}).count();
-          var creditsPerBet = totalGamePot / countCorrectBets;
-          creditsPerBet = Math.floor(creditsPerBet);
+    // Adjustment fungus75: use cache if is valid (don't forget to call myRecalcAll to invalid all)
+    var totalWonCredits = Meteor.user().profile.totalWonCredits||-1;
+    if (totalWonCredits>=0) return totalWonCredits;
 
-          totalWonCredits = totalWonCredits + creditsPerBet;
-        }
-      }
-    });
-    return totalWonCredits;
+    Meteor.call('myTotalWonCredits');
+    return Meteor.user().profile.totalWonCredits;
   },
   'totalLostCredits': function() {
-    var totalLostCredits = 0;
-    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
-      if(GameList.findOne({ _id: doc.game })) {
-        var result1 = GameList.findOne({ _id: doc.game }).result1;
-        var result2 = GameList.findOne({ _id: doc.game }).result2;
-        if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
-          totalLostCredits = totalLostCredits + 2;
-        }
-      }
-    });
-    return totalLostCredits;
+    // Adjustment fungus75: use cache if is valid (don't forget to call myRecalcAll to invalid all)
+    var totalLostCredits=Meteor.user().profile.totalLostCredits||-1;
+    if (totalLostCredits>=0) return totalLostCredits;
+
+    Meteor.call('myTotalLostCredits');
+    return Meteor.user().profile.totalLostCredits;
   }
 });
 

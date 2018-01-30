@@ -12,9 +12,10 @@ Template.openGames.events({
     var creditsNeeded = 2;
 
     Meteor.call('checkCredits', Meteor.userId(), creditsNeeded, function(error, enoughCredits) {
-      if(enoughCredits == true) {
-        Meteor.call('addBetResult', gameId, result1, result2);
-        Meteor.call('debitCredits', Meteor.userId(), creditsNeeded);
+      if(enoughCredits) {
+        Meteor.call('addBetResult', gameId, result1, result2, function(error, addedOk) {
+            if (addedOk) Meteor.call('debitCredits', Meteor.userId(), creditsNeeded);
+        });
       } else {
         alert("Sie haben zu wenig Guthaben um die Aktion durchzuführen!");
       }
