@@ -13,15 +13,18 @@ Meteor.methods({
     });
     if (exist) return false; // still exist, no need to enter
 
-    BetList.insert({
+    var newBetId=BetList.insert({
       game: gameId,
       user: Meteor.userId(),
       result1: result1,
       result2: result2
     });
+
+    Meteor.users.update(Meteor.userId(), { $push: {bets: newBetId} });
     return true;
   },
   'removeBet': function(betId) {
     BetList.remove({ _id: betId });
+    Meteor.users.update(Meteor.userId(), { $pull: {bets: betId} });
   }
 });

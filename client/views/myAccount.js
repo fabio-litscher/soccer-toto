@@ -1,27 +1,21 @@
 Template.profileData.helpers({
   'wonUserBets': function() {
     var wonBets = [];
-    BetList.find({ user: Meteor.userId() }, {}).forEach( function(doc) {
-      if(GameList.findOne({ _id: doc.game })) {
-        var result1 = GameList.findOne({ _id: doc.game }).result1;
-        var result2 = GameList.findOne({ _id: doc.game }).result2;
-        if(result1 != undefined && (doc.result1 == result1 && doc.result2 == result2)) {
-          wonBets.push(doc);
-        }
-      }
+    Meteor.user().wonBets.forEach( function(bid) {
+      var game=false;
+      var doc=BetList.findOne({_id:bid});
+      if (doc) game=GameList.findOne({ _id: doc.game });
+      if (game) wonBets.push(doc);
     });
     return wonBets;
   },
   'lostUserBets': function() {
     var lostBets = [];
-    BetList.find({ user: Meteor.userId() }, {}).forEach( function(doc) {
-      if(GameList.findOne({ _id: doc.game })) {
-        var result1 = GameList.findOne({ _id: doc.game }).result1;
-        var result2 = GameList.findOne({ _id: doc.game }).result2;
-        if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
-          lostBets.push(doc);
-        }
-      }
+    Meteor.user().lostBets.forEach( function(bid) {
+      var game=false;
+      var doc=BetList.findOne({_id:bid});
+      if (doc) game=GameList.findOne({ _id: doc.game });
+      if (game) lostBets.push(doc);
     });
     return lostBets;
   },
@@ -47,15 +41,10 @@ Template.profileData.helpers({
     return team2;
   },
   'wonCredits': function() {
-    var result1 = GameList.findOne({ _id: this.game }).result1;
-    var result2 = GameList.findOne({ _id: this.game }).result2;
-
-    var totalBets = BetList.find({ game: this.game }, {}).count();
-    var totalGamePot = totalBets * 2;
-    var countCorrectBets = BetList.find({ game: this.game, result1: result1, result2: result2 }, {}).count();
-    var creditsPerBet = totalGamePot / countCorrectBets;
-    creditsPerBet = Math.floor(creditsPerBet);
-
+    var game=GameList.findOne({ _id: this.game });
+    var result1 = game.result1;
+    var result2 = game.result2;
+    var creditsPerBet = game.creditsPerBet;
     return creditsPerBet;
   },
   'totalWonCredits': function() {

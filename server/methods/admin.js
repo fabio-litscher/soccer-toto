@@ -155,13 +155,19 @@ Meteor.methods({
       var creditsPerBet = totalGamePot / countCorrectBets;
       creditsPerBet = Math.floor(creditsPerBet);
     }
+    GameList.update({_id: gameId},{ $set: {creditsPerBet:creditsPerBet}});
 
     // Credits an entsprechende User übertragen
     var countUsers = 0;
-    BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).forEach( function(doc) {
-      Meteor.call('addCredits', doc.user, creditsPerBet);
-      Meteor.call('thisRecalcAll', doc.user);
-      countUsers = countUsers + 1;
+    BetList.find({ game: gameId}, {}).forEach( function(doc) { 
+      if (doc.result1==resultTeam1 && doc.result2==resultTeam2) {
+        Meteor.call('addCredits', doc.user, creditsPerBet);
+        Meteor.call('thisRecalcAll', doc.user);
+        Meteor.users.update(doc.user, { $push: {wonBets: doc._id}});
+        countUsers = countUsers + 1;
+      } else {
+        Meteor.users.update(doc.user, { $push: {lostBets: doc._id}});
+      }
     });
 
     console.log("totalGamePot="+totalGamePot);
