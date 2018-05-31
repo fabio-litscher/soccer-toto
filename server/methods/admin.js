@@ -208,7 +208,7 @@ Accounts.onCreateUser(function(options, user) {
       shortname=user.profile.shortname;
     }
 
-    var admins = ["stjo", "bret", "pire"];
+    var admins = ["stjo", "pire"];
     if(admins.indexOf(shortname) > -1) user.isAdmin=true;
 
     return user;
