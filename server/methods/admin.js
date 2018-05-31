@@ -175,12 +175,13 @@ Meteor.methods({
     console.log("creditsPerBet="+creditsPerBet);
 
     // Rundungsdifferenz in Sieger-Pott übertragen
+    // PIRE: rausgenommen, es gibt keinen Übertrag an den WMTOPF
     var roundingDifference = totalGamePot - countUsers * creditsPerBet;
 
     console.log("in insertGameResult function (rounding):");
     console.log(roundingDifference);
 
-    Meteor.call('creditsToPot', "winner", roundingDifference);
+    //Meteor.call('creditsToPot', "winner", roundingDifference);
   },
   'clearTeamStatistics': function() {
     TeamList.find({}, {}).forEach( function(doc) {
