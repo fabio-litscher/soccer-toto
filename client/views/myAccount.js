@@ -70,6 +70,8 @@ Template.userBets.events({
   'submit form#addWinner': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var winnerTeam = Session.get('winnerTeam');
+    winnerTeam=winnerTeam.trim();
+    if (winnerTeam=="") return;
     var creditsNeeded = 5;
 
     Meteor.call('checkCredits', Meteor.userId(), creditsNeeded, function(error, enoughCredits) {
