@@ -184,6 +184,9 @@ Template.useradministration.helpers({
       return creditsPerBet + ".-";
     }
     else return "-2.-";
+  },
+  'userWinner': function(teamId) {
+    return TeamList.findOne(teamId).name;
   }
 });
 

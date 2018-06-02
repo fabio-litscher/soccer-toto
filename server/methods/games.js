@@ -26,5 +26,10 @@ Meteor.methods({
   'removeBet': function(betId) {
     BetList.remove({ _id: betId });
     Meteor.users.update(Meteor.userId(), { $pull: {bets: betId} });
+  },
+  'getTeamName': function(teamId) {
+     var team=TeamList.find(teamId);
+     if (team) return team.name;
+     return "";
   }
 });

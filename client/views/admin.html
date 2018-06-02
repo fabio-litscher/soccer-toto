@@ -199,6 +199,16 @@
           </td>
         </tr>
         <tr>
+          <th>Sieger:</th>
+          <td id="usersWinner">
+            {{#if selectedUser}}
+              {{#if selectedUser.profile.winner}}
+                {{userWinner(selectedUser.profile.winner)}}
+              {{/if}}
+            {{/if}}
+          </td>
+        </tr>
+        <tr>
           <th>Guthaben:</th>
           <td>
             {{#if selectedUser}}
