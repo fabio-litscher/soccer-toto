@@ -195,7 +195,7 @@ Template.admin.helpers({
     if (Meteor.user() && Meteor.user().isAdmin) {
         return true;
       } else {
-        return "hidden";
+        return false;
       }
   }
 });
