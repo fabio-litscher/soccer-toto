@@ -150,6 +150,7 @@ Meteor.methods({
     // Pot auf alle richtigen Ergebnisse aufteilen
     var countCorrectBets = BetList.find({ game: gameId, result1: resultTeam1, result2: resultTeam2 }, {}).count();
     if(countCorrectBets == 0) {
+      Meteor.call('creditsToPot', "winner", totalGamePot);
       var creditsPerBet = 0;
     } else {
       var creditsPerBet = totalGamePot / countCorrectBets;
@@ -159,7 +160,7 @@ Meteor.methods({
 
     // Credits an entsprechende User übertragen
     var countUsers = 0;
-    BetList.find({ game: gameId}, {}).forEach( function(doc) { 
+    BetList.find({ game: gameId}, {}).forEach( function(doc) {
       if (doc.result1==resultTeam1 && doc.result2==resultTeam2) {
         Meteor.call('addCredits', doc.user, creditsPerBet);
         Meteor.call('thisRecalcAll', doc.user);
@@ -176,12 +177,11 @@ Meteor.methods({
 
     // Rundungsdifferenz in Sieger-Pott übertragen
     // PIRE: rausgenommen, es gibt keinen Übertrag an den WMTOPF
-    var roundingDifference = totalGamePot - countUsers * creditsPerBet;
-
-    console.log("in insertGameResult function (rounding):");
-    console.log(roundingDifference);
-
-    //Meteor.call('creditsToPot', "winner", roundingDifference);
+    // var roundingDifference = totalGamePot - countUsers * creditsPerBet;
+    // console.log("in insertGameResult function (rounding):");
+    // console.log(roundingDifference);
+    // Rundungsdifferenz wird nicht in Sieger-Pott gesteckt
+    // Meteor.call('creditsToPot', "winner", roundingDifference);
   },
   'clearTeamStatistics': function() {
     TeamList.find({}, {}).forEach( function(doc) {
@@ -208,7 +208,7 @@ Accounts.onCreateUser(function(options, user) {
       shortname=user.profile.shortname;
     }
 
-    var admins = ["stjo", "pire"];
+    var admins = ["stjo", "pire", "lfab"];
     if(admins.indexOf(shortname) > -1) user.isAdmin=true;
 
     return user;
