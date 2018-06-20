@@ -9,7 +9,6 @@
     {{/if}}
 
     {{> openGames}}
-    {{> finishedGames}}
   </div>
 </template>
 
@@ -104,78 +103,4 @@
       </table>
     </div>
   </div>
-</template>
-
-
-
-<template name="finishedGames">
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <h4>Abgeschlossene Spiele</h4>
-      <table id="" class="standardTable gamesTable highlight bordered responsive-table">
-        <thead>
-          <tr>
-            <th>Datum</th>
-            <th>Uhrzeit</th>
-            <th>Gruppe / Runde</th>
-            <th>Mannschaft 1</th>
-            <th>Mannschaft 2</th>
-            <th>Ergebnis / Sieger</th>
-            <th>Tipps</th>
-          </tr>
-        </thead>
-        {{#each closedGames}}
-          <thead class="mobileOnly">
-            <tr>
-              <th>Datum</th>
-              <th>Uhrzeit</th>
-              <th>Gruppe / Runde</th>
-              <th>Mannschaft 1</th>
-              <th>Mannschaft 2</th>
-              <th>Auf Ergebnis wetten</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{date}}</td>
-              <td>{{time}}</td>
-              <td>
-                {{#if groupName}}
-                  {{groupName}}
-                {{else}}
-                  <b>{{knockoutRound}}</b>
-                {{/if}}
-              </td>
-              <td>{{team1.name}}</td>
-              <td>{{team2.name}}</td>
-              <td>
-                {{result1}} : {{result2}}
-                {{#unless groupName}}
-                   - <b>{{winnerTeam.name}}</b>
-                {{/unless}}
-              </td>
-              <td>
-                {{#if currentUser}}
-                  {{#if hasBetsForGame}}
-                    <td>
-                      <b>Gesamtgewinn: {{gamePot}}.- CHF</b><br />
-                      <button id="showBets_{{_id}}" gameId="{{_id}}" class="showAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Alle Tipps anzeigen</button>
-                      <button id="hideBets_{{_id}}" gameId="{{_id}}" class="hidden hideAllGameBets mobileBlock mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Ausblenden</button>
-                      <span id="bets_{{_id}}" class="hidden">{{gameBets}}</span>
-                    </td>
-                  {{else}}
-                    <td><br /></td>
-                  {{/if}}
-                {{else}}
-                  <td><br /></td>
-                {{/if}}
-              </td>
-            </tr>
-          </tbody>
-          <hr class="mobileOnly" />
-        {{/each}}
-      </table>
-    </div>
-  </div>
-
 </template>

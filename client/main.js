@@ -15,6 +15,7 @@ Router.route('/rules');
 Router.route('/betRankingPage');
 Router.route('/groups');
 Router.route('/games');
+Router.route('/closedGames');
 Router.route('/myAccount');
 Router.route('/admin');
 
