@@ -56,12 +56,27 @@ Template.profileData.helpers({
     return Meteor.user().profile.totalWonCredits;
   },
   'totalLostCredits': function() {
+
+    var totalLostCredits = 0;
+    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+      if(GameList.findOne({ _id: doc.game })) {
+        var result1 = GameList.findOne({ _id: doc.game }).result1;
+        var result2 = GameList.findOne({ _id: doc.game }).result2;
+        if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
+          totalLostCredits = totalLostCredits + 2;
+        }
+      }
+    });
+    return totalLostCredits;
+
+
+// fehler bei Anpassung, recalc wird wahrscheinlich nicht richtig gemacht -> kurzfristig alte variante wieder eingebaut
     // Adjustment fungus75: use cache if is valid (don't forget to call myRecalcAll to invalid all)
-    var totalLostCredits=Meteor.user().profile.totalLostCredits||-1;
+    /*var totalLostCredits=Meteor.user().profile.totalLostCredits||-1;
     if (totalLostCredits>=0) return totalLostCredits;
 
     Meteor.call('myTotalLostCredits');
-    return Meteor.user().profile.totalLostCredits;
+    return Meteor.user().profile.totalLostCredits;*/
   }
 });
 
