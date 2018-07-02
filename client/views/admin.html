@@ -386,6 +386,7 @@
           <h6 class="inline"><b>Rest: {{restOfWinnerPot}}.- CHF</b></h6>
           <button id="delWinnerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Sieger-Pot löschen</button>
         </div>
+
         <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
           <h5>Torschützenkönig-Pot: {{topScorerPot}}.- CHF</h5>
 
@@ -402,6 +403,19 @@
           <br /><br />
           <h6 class="inline"><b>Rest: {{restOfTopScorerPot}}.- CHF</b></h6>
           <button id="delTopScorerPot" class="mdl-button mdl-js-button mdl-button--colored mdl-button--raised mdl-js-ripple-effect">Torschützenkönig-Pot löschen</button>
+        </div>
+
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+          <h5>Ausgeschiedene Mannschaften <b><i>(ausgewählt = ausgeschieden)</i></b></h5>
+          <div class="topScorerUserListDiv">
+            <ul class="collection" id="eilminatedTeamsList">
+              {{#each team}}
+                <li class="collection-item" userId="{{_id}}">
+                  <div><input type="checkbox" checked="{{eliminated}}" class="filled-in eliminatedTeamCheckbox" teamId="{{_id}}" id="filled-in-box_{{_id}}" /><label for="filled-in-box_{{_id}}">{{name}}</label></div>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ Template.pots.helpers({
     }
   },
   'winnerTeam': function() {
-    return TeamList.findOne({ _id: this.profile.winner }).name;
+    return TeamList.findOne({ _id: this.profile.winner });
   },
   'winnerPot': function() {
     var exists = PotList.findOne({ name: "winner" }, {});

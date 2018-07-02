@@ -29,7 +29,7 @@
         <ul class="collection homeUserPotBets">
           {{#each userWithWinner}}
             <li class="collection-item">
-              <div><span style="color: #26a69a;">{{winnerTeam}}</span><p class="secondary-content" style="color: black;">{{profile.shortname}}</p></div>
+              <div><span style="{{#if winnerTeam.eliminated}}color: red{{else}}color: #26a69a;{{/if}}">{{winnerTeam.name}} {{#if winnerTeam.eliminated}}<b><i> - ausgeschieden</i></b>{{/if}}</span><p class="secondary-content" style="{{#if winnerTeam.eliminated}}color: red{{else}}color: black;{{/if}}">{{profile.shortname}}</p></div>
             </li>
           {{/each}}
         </ul>

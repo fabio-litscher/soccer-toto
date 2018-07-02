@@ -196,6 +196,12 @@ Meteor.methods({
   },
   'removePot': function(potName) {
     PotList.remove({ name: potName });
+  },
+  'setTeamEliminated': function(selectedTeam) {
+    TeamList.update({_id: selectedTeam}, { $set: {eliminated: true} });
+  },
+  'setTeamUnEliminated': function(selectedTeam) {
+    TeamList.update({_id: selectedTeam}, { $set: {eliminated: false} });
   }
 });
 

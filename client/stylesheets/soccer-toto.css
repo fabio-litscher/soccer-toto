@@ -25,6 +25,12 @@
   max-height: 450px;
   overflow-y: auto;
 }
+.eliminatedTeam {
+  margin: 0;
+  padding: 0;
+  color: red;
+  text-decoration: line-through;
+}
 
 #betRanking {
   max-height: 300px;

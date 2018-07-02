@@ -470,6 +470,14 @@ Template.adminResults.helpers({
 
 // adminCredits template events
 Template.adminCredits.events({
+  'click .eliminatedTeamCheckbox': function(event) {
+    var selectedTeam = event.target.getAttribute('teamId');
+    if(TeamList.findOne({ _id: selectedTeam }).eliminated) {
+      Meteor.call('setTeamUnEliminated', selectedTeam);
+    } else {
+      Meteor.call('setTeamEliminated', selectedTeam);
+    }
+  },
   'submit form#sendCredits': function(event){
     event.preventDefault();   // submit unterbinden, damit Seite nicht neu geladen wird
     var selectedUser = Session.get('selectedUserSend');
