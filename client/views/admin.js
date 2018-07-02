@@ -542,7 +542,7 @@ Template.adminCredits.helpers({
     return Meteor.users.find({});
   },
   'team': function() {
-    return TeamList.find({}, {sort: {name: 1} });
+    return TeamList.find({}, {sort: {eliminated: 1, name: 1} });
   },
   'userWithTopScorer': function() {
     var exists = Meteor.users.find({ "profile.topScorer": { $exists: true } }, {});
