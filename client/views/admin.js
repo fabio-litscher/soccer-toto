@@ -188,8 +188,10 @@ Template.useradministration.helpers({
     return TeamList.findOne(teamId).name;
   },
   'userBalance': function() {
+    var userId = Session.get('selectedUser');
+
     var countWonBets = 0;
-    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+    BetList.find({ user: userId }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
       if(GameList.findOne({ _id: doc.game })) {
         var result1 = GameList.findOne({ _id: doc.game }).result1;
         var result2 = GameList.findOne({ _id: doc.game }).result2;
@@ -204,7 +206,7 @@ Template.useradministration.helpers({
     var wonCredits = Meteor.user().profile.totalWonCredits-creditsAbziehen;
 
     var totalLostCredits = 0;
-    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+    BetList.find({ user: userId }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
       if(GameList.findOne({ _id: doc.game })) {
         var result1 = GameList.findOne({ _id: doc.game }).result1;
         var result2 = GameList.findOne({ _id: doc.game }).result2;
@@ -215,7 +217,7 @@ Template.useradministration.helpers({
     });
     var lostCredits = totalLostCredits;
 
-    return Math.subtract(wonCredits,lostCredits);
+    return wonCredits-lostCredits;
   }
 });
 
