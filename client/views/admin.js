@@ -203,14 +203,16 @@ Template.useradministration.helpers({
           var creditsPerBet = totalGamePot / countCorrectBets;
           creditsPerBet = Math.floor(creditsPerBet);
 
-          totalWonCredits = totalWonCredits + creditsPerBet;
+          // -2 for the bet
+          totalWonCredits = totalWonCredits + creditsPerBet - 2;
         }
         else if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
           totalLostCredits = totalLostCredits + 2;
         }
       }
     });
-    return totalWonCredits - totalLostCredits;
+    var balance = totalWonCredits - totalLostCredits;
+    return "Gewinn: "+totalWonCredits+", Verlust: "+totalLostCredits+", Bilanz: "+balance;
   },
   'userBalance_old': function() {
     var userId = Session.get('selectedUser');
