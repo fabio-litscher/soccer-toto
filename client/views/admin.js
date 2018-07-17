@@ -186,6 +186,36 @@ Template.useradministration.helpers({
   },
   'userWinner': function(teamId) {
     return TeamList.findOne(teamId).name;
+  },
+  'userBalance': function() {
+    var countWonBets = 0;
+    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+      if(GameList.findOne({ _id: doc.game })) {
+        var result1 = GameList.findOne({ _id: doc.game }).result1;
+        var result2 = GameList.findOne({ _id: doc.game }).result2;
+        if(result1 != undefined && (doc.result1 == result1 && doc.result2 == result2)) {
+          countWonBets = countWonBets + 1;
+        }
+      }
+    });
+    var creditsAbziehen = countWonBets*2;
+
+    Meteor.call('myTotalWonCredits');
+    var wonCredits = Meteor.user().profile.totalWonCredits-creditsAbziehen;
+
+    var totalLostCredits = 0;
+    BetList.find({ user: Meteor.userId() }, { sort: {date: 1, time: 1} }).forEach( function(doc) {
+      if(GameList.findOne({ _id: doc.game })) {
+        var result1 = GameList.findOne({ _id: doc.game }).result1;
+        var result2 = GameList.findOne({ _id: doc.game }).result2;
+        if(result1 != undefined && (doc.result1 != result1 || doc.result2 != result2)) {
+          totalLostCredits = totalLostCredits + 2;
+        }
+      }
+    });
+    var lostCredits = totalLostCredits;
+
+    return Math.subtract(wonCredits,lostCredits);
   }
 });
 
