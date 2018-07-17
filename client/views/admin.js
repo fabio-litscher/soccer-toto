@@ -174,7 +174,12 @@ Template.useradministration.helpers({
     var tipp1 = this.result1;
     var tipp2 = this.result2;
 
+<<<<<<< HEAD
     if(tipp1 == result1 && tipp2 == result2) {
+=======
+    if(result1 == "") return "";
+    else if(tipp1 == result1 && tipp2 == result2) {
+>>>>>>> 11c9f738721f8842242a5270fe0f6b1d6a17c249
       var totalBets = BetList.find({ game: this.game }, {}).count();
       var totalGamePot = totalBets * 2;
       var countCorrectBets = BetList.find({ game: this.game, result1: result1, result2: result2 }, {}).count();
